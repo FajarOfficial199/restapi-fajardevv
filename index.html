@@ -6,16 +6,16 @@
     <title>Fajar API</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Animasi Slide Down */
+        /* Animasi Slide Down Slow */
         .slide-down {
             opacity: 0;
-            transform: translateY(-20px);
-            animation: slideDown 0.8s ease-out forwards;
+            transform: translateY(-50px);
+            animation: slideDown 1.5s ease-out forwards;
         }
         @keyframes slideDown {
             0% {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(-50px);
             }
             100% {
                 opacity: 1;
@@ -24,8 +24,17 @@
         }
         /* Efek Hover untuk Card */
         .hover-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        /* Efek Gradient Hover pada Tombol */
+        .btn-gradient {
+            background: linear-gradient(to right, #3b82f6, #9333ea);
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-gradient:hover {
+            background: linear-gradient(to right, #9333ea, #f43f5e);
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -56,7 +65,7 @@
                 <div class="bg-white p-6 rounded-lg shadow-md hover-card transition duration-300">
                     <span class="text-blue-600 font-bold">GET</span>
                     <h3 class="text-lg font-semibold text-gray-700 mt-2">TikTok Download</h3>
-                    <a href="/api/downloader/tiktok?url=https://vt.tiktok.com/ZSjnf5voB/" target="_blank" class="block mt-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-500 hover:to-purple-500 text-white py-2 px-4 rounded transition text-center">
+                    <a href="/api/downloader/tiktok?url=https://vt.tiktok.com/ZSjnf5voB/" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
                         Try
                     </a>
                 </div>
@@ -65,7 +74,7 @@
                 <div class="bg-white p-6 rounded-lg shadow-md hover-card transition duration-300">
                     <span class="text-blue-600 font-bold">GET</span>
                     <h3 class="text-lg font-semibold text-gray-700 mt-2">YTMP3 Download</h3>
-                    <a href="/api/downloader/ytmp3?url=https://youtu.be/AURkGj0jEx4?si=f0USJg7M4c39r1t2" target="_blank" class="block mt-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-500 hover:to-purple-500 text-white py-2 px-4 rounded transition text-center">
+                    <a href="/api/downloader/ytmp3?url=https://youtu.be/AURkGj0jEx4?si=f0USJg7M4c39r1t2" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
                         Try
                     </a>
                 </div>
@@ -74,7 +83,7 @@
                 <div class="bg-white p-6 rounded-lg shadow-md hover-card transition duration-300">
                     <span class="text-blue-600 font-bold">GET</span>
                     <h3 class="text-lg font-semibold text-gray-700 mt-2">YTMP4 Download</h3>
-                    <a href="/api/downloader/ytmp4?url=https://youtu.be/AURkGj0jEx4?si=f0USJg7M4c39r1t2" target="_blank" class="block mt-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-500 hover:to-purple-500 text-white py-2 px-4 rounded transition text-center">
+                    <a href="/api/downloader/ytmp4?url=https://youtu.be/AURkGj0jEx4?si=f0USJg7M4c39r1t2" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
                         Try
                     </a>
                 </div>
@@ -83,7 +92,7 @@
                 <div class="bg-white p-6 rounded-lg shadow-md hover-card transition duration-300">
                     <span class="text-blue-600 font-bold">GET</span>
                     <h3 class="text-lg font-semibold text-gray-700 mt-2">Spotify Search</h3>
-                    <a href="/api/downloader/spotifys?judul=hujan" target="_blank" class="block mt-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-500 hover:to-purple-500 text-white py-2 px-4 rounded transition text-center">
+                    <a href="/api/downloader/spotifys?judul=hujan" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
                         Try
                     </a>
                 </div>
@@ -92,7 +101,7 @@
                 <div class="bg-white p-6 rounded-lg shadow-md hover-card transition duration-300">
                     <span class="text-blue-600 font-bold">GET</span>
                     <h3 class="text-lg font-semibold text-gray-700 mt-2">Spotify Download</h3>
-                    <a href="/api/downloader/spotify?url=https://open.spotify.com/track/514rhnksEwHUh6LxXsQ4Y9?si=jzow0lr6Qay3yeMJcrEn8A&context=spotify%3Aplaylist%3A37i9dQZF1DX5Ejj0EkURtP" target="_blank" class="block mt-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-500 hover:to-purple-500 text-white py-2 px-4 rounded transition text-center">
+                    <a href="/api/downloader/spotify?url=https://open.spotify.com/track/514rhnksEwHUh6LxXsQ4Y9?si=jzow0lr6Qay3yeMJcrEn8A&context=spotify%3Aplaylist%3A37i9dQZF1DX5Ejj0EkURtP" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
                         Try
                     </a>
                 </div>
