@@ -1,161 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fajar API</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Animasi Slide Down */
-        .slide-down {
-            opacity: 0;
-            transform: translateY(-50px);
-            animation: slideDown 1s ease-out forwards;
+        /* Gradient Background */
+        .gradient-bg {
+            background: linear-gradient(90deg, #4F46E5, #9333EA);
         }
-        @keyframes slideDown {
-            0% { opacity: 0; transform: translateY(-50px); }
-            100% { opacity: 1; transform: translateY(0); }
+
+        /* Animasi Slide Down */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Animasi Hamburger Menu */
-        .menu-btn {
-            cursor: pointer;
+        .menu-toggle {
             transition: transform 0.3s ease-in-out;
-        }
-        .menu-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* Dropdown Menu */
-        .dropdown {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 60px;
-            background: white;
-            width: 200px;
-            border-radius: 5px;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-        }
-        .dropdown a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            color: gray;
-            transition: 0.3s;
-        }
-        .dropdown a:hover {
-            background: #f3f4f6;
-            color: black;
-        }
-
-        /* Efek Hover */
-        .hover-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Button Gradient */
-        .btn-gradient {
-            background: linear-gradient(to right, #3b82f6, #9333ea);
-            transition: all 0.3s ease-in-out;
-        }
-        .btn-gradient:hover {
-            background: linear-gradient(to right, #9333ea, #f43f5e);
-            transform: scale(1.05);
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-gray-100 text-gray-800">
 
-    <!-- Header -->
-    <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg p-5 flex justify-between items-center relative slide-down">
-        <!-- Menu Garis 3 dengan Animasi -->
-        <div class="relative">
-            <div class="menu-btn text-3xl" onclick="toggleMenu()">&#9776;</div>
-            <div id="dropdownMenu" class="dropdown">
-                <a href="https://wa.me/628123456789" target="_blank">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" width="20"> WhatsApp
-                </a>
-                <a href="mailto:fajar@example.com">
-                    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" width="20"> Email
-                </a>
+    <!-- Navbar -->
+    <header class="gradient-bg text-white shadow p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Burger Menu -->
+            <div class="cursor-pointer menu-toggle" id="menuToggle">
+                <div class="w-7 h-1 bg-white mb-1 transition"></div>
+                <div class="w-7 h-1 bg-white mb-1 transition"></div>
+                <div class="w-7 h-1 bg-white transition"></div>
             </div>
+
+            <h1 class="text-2xl font-bold">Fajar API</h1>
+
+            <!-- Search Bar -->
+            <input id="searchInput" type="text" placeholder="Search API..." 
+                class="p-2 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white transition">
         </div>
 
-        <h1 class="text-3xl font-bold tracking-wide">Fajar API</h1>
-
-        <!-- Search Bar -->
-        <input type="text" id="searchInput" placeholder="Search API..." class="px-4 py-2 rounded-lg text-gray-900 focus:outline-none" onkeyup="searchEndpoints()">
+        <!-- Sidebar Menu -->
+        <div id="sideMenu" class="fixed left-0 top-0 w-64 h-full bg-white shadow-lg transform -translate-x-full transition-transform">
+            <div class="p-4">
+                <h2 class="text-xl font-bold text-gray-800">Menu</h2>
+                <ul class="mt-4 space-y-2">
+                    <li><a href="https://wa.me/1234567890" class="block text-blue-500 hover:text-blue-700">WhatsApp</a></li>
+                    <li><a href="mailto:email@example.com" class="block text-blue-500 hover:text-blue-700">Email</a></li>
+                </ul>
+            </div>
+        </div>
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto mt-8 p-6">
+    <main class="container mx-auto mt-6 p-4">
         <!-- Intro Section -->
-        <div class="bg-white p-6 rounded-lg shadow-md text-center slide-down">
-            <h2 class="text-2xl font-semibold text-blue-700">Created By Fajar</h2>
-            <p class="text-gray-600">API yang siap membantu kebutuhan downloader kamu!</p>
+        <div class="bg-white p-6 rounded-lg shadow-lg fade-in">
+            <h2 class="text-2xl font-semibold text-gray-800 text-center">Created By Fajar</h2>
+            <p class="text-center text-gray-600">API yang siap membantu kebutuhan downloader kamu!</p>
         </div>
 
-        <!-- Endpoints Section -->
-        <section class="mt-10">
-            <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center slide-down">Download Endpoints</h2>
+        <!-- Endpoints -->
+        <section class="mt-8">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-4">Download Endpoints</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <ul id="apiList">
+                    <!-- Endpoint Item -->
+                    <li class="flex justify-between items-center p-4 border-b hover:bg-gray-200 transition fade-in">
+                        <span class="text-blue-600 font-semibold">GET</span>
+                        <span class="text-gray-700">TikTok Download</span>
+                        <a href="/api/downloader/tiktok?url=https://vt.tiktok.com/ZSjnf5voB/" target="_blank" 
+                            class="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-80 text-white py-2 px-4 rounded transition">
+                            Try
+                        </a>
+                    </li>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="endpointList">
-                <div class="endpoint bg-white p-6 rounded-lg shadow-md hover-card transition duration-300 slide-down">
-                    <span class="text-blue-600 font-bold">GET</span>
-                    <h3 class="text-lg font-semibold text-gray-700 mt-2">TikTok Download</h3>
-                    <a href="/api/downloader/tiktok" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
-                        Try
-                    </a>
-                </div>
-
-                <div class="endpoint bg-white p-6 rounded-lg shadow-md hover-card transition duration-300 slide-down">
-                    <span class="text-blue-600 font-bold">GET</span>
-                    <h3 class="text-lg font-semibold text-gray-700 mt-2">YTMP3 Download</h3>
-                    <a href="/api/downloader/ytmp3" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
-                        Try
-                    </a>
-                </div>
-
-                <div class="endpoint bg-white p-6 rounded-lg shadow-md hover-card transition duration-300 slide-down">
-                    <span class="text-blue-600 font-bold">GET</span>
-                    <h3 class="text-lg font-semibold text-gray-700 mt-2">YTMP4 Download</h3>
-                    <a href="/api/downloader/ytmp4" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
-                        Try
-                    </a>
-                </div>
+                    <li class="flex justify-between items-center p-4 border-b hover:bg-gray-200 transition fade-in">
+                        <span class="text-blue-600 font-semibold">GET</span>
+                        <span class="text-gray-700">YTMP3 Download</span>
+                        <a href="/api/downloader/ytmp3?url=https://youtu.be/AURkGj0jEx4" target="_blank" 
+                            class="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-80 text-white py-2 px-4 rounded transition">
+                            Try
+                        </a>
+                    </li>
+                    
+                    <li class="flex justify-between items-center p-4 border-b hover:bg-gray-200 transition fade-in">
+                        <span class="text-blue-600 font-semibold">GET</span>
+                        <span class="text-gray-700">Spotify Download</span>
+                        <a href="/api/downloader/spotify?url=https://open.spotify.com/track/514rhnksEwHUh6LxXsQ4Y9" target="_blank" 
+                            class="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-80 text-white py-2 px-4 rounded transition">
+                            Try
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </section>
+        </section>        
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 mt-10 slide-down">
+    <footer class="gradient-bg text-white p-4 mt-8">
         <div class="container mx-auto text-center">
             <p>&copy; 2025 - 2026 FAJAR API. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- JavaScript -->
     <script>
-        function toggleMenu() {
-            let menu = document.getElementById('dropdownMenu');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-        }
+        // Toggle Sidebar
+        const menuToggle = document.getElementById("menuToggle");
+        const sideMenu = document.getElementById("sideMenu");
 
-        function searchEndpoints() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let items = document.querySelectorAll('.endpoint');
+        menuToggle.addEventListener("click", () => {
+            if (sideMenu.classList.contains("-translate-x-full")) {
+                sideMenu.classList.remove("-translate-x-full");
+            } else {
+                sideMenu.classList.add("-translate-x-full");
+            }
+        });
+
+        // Search Functionality
+        document.getElementById("searchInput").addEventListener("input", function() {
+            let filter = this.value.toLowerCase();
+            let items = document.querySelectorAll("#apiList li");
 
             items.forEach(item => {
-                let title = item.querySelector('h3').innerText.toLowerCase();
-                if (title.includes(input) || [...input].some(char => title.includes(char))) {
-                    item.style.display = "block";
+                let text = item.textContent.toLowerCase();
+                if (text.includes(filter)) {
+                    item.style.display = "";
                 } else {
                     item.style.display = "none";
                 }
             });
-        }
+        });
     </script>
 
 </body>
