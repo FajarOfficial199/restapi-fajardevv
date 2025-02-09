@@ -16,23 +16,55 @@
             0% { opacity: 0; transform: translateY(-50px); }
             100% { opacity: 1; transform: translateY(0); }
         }
-        .delay-1 { animation-delay: 0.3s; }
-        .delay-2 { animation-delay: 0.6s; }
-        .delay-3 { animation-delay: 0.9s; }
 
-        /* Animasi Garis Tiga */
-        .menu-btn { cursor: pointer; transition: transform 0.3s ease-in-out; }
-        .menu-btn:hover { transform: translateX(5px); }
+        /* Animasi Hamburger Menu */
+        .menu-btn {
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .menu-btn:hover {
+            transform: scale(1.1);
+        }
 
         /* Dropdown Menu */
-        .dropdown { display: none; position: absolute; left: 0; top: 60px; background: white; width: 200px; border-radius: 5px; box-shadow: 0 5px 10px rgba(0,0,0,0.2); }
-        .dropdown a { display: flex; align-items: center; gap: 10px; padding: 10px; color: gray; transition: 0.3s; }
-        .dropdown a:hover { background: #f3f4f6; color: black; }
+        .dropdown {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 60px;
+            background: white;
+            width: 200px;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+        .dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            color: gray;
+            transition: 0.3s;
+        }
+        .dropdown a:hover {
+            background: #f3f4f6;
+            color: black;
+        }
 
         /* Efek Hover */
-        .hover-card:hover { transform: translateY(-5px); box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); }
-        .btn-gradient { background: linear-gradient(to right, #3b82f6, #9333ea); transition: all 0.3s ease-in-out; }
-        .btn-gradient:hover { background: linear-gradient(to right, #9333ea, #f43f5e); transform: scale(1.05); }
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Button Gradient */
+        .btn-gradient {
+            background: linear-gradient(to right, #3b82f6, #9333ea);
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-gradient:hover {
+            background: linear-gradient(to right, #9333ea, #f43f5e);
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
@@ -40,7 +72,7 @@
     <!-- Header -->
     <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg p-5 flex justify-between items-center relative slide-down">
         <!-- Menu Garis 3 dengan Animasi -->
-        <div>
+        <div class="relative">
             <div class="menu-btn text-3xl" onclick="toggleMenu()">&#9776;</div>
             <div id="dropdownMenu" class="dropdown">
                 <a href="https://wa.me/628123456789" target="_blank">
@@ -61,44 +93,36 @@
     <!-- Main Content -->
     <main class="container mx-auto mt-8 p-6">
         <!-- Intro Section -->
-        <div class="bg-white p-6 rounded-lg shadow-md text-center slide-down delay-1">
+        <div class="bg-white p-6 rounded-lg shadow-md text-center slide-down">
             <h2 class="text-2xl font-semibold text-blue-700">Created By Fajar</h2>
             <p class="text-gray-600">API yang siap membantu kebutuhan downloader kamu!</p>
         </div>
 
         <!-- Endpoints Section -->
         <section class="mt-10">
-            <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center slide-down delay-2">Download Endpoints</h2>
+            <h2 class="text-3xl font-bold text-indigo-700 mb-6 text-center slide-down">Download Endpoints</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="endpointList">
-                <div class="endpoint bg-white p-6 rounded-lg shadow-md hover-card transition duration-300 slide-down delay-3">
+                <div class="endpoint bg-white p-6 rounded-lg shadow-md hover-card transition duration-300 slide-down">
                     <span class="text-blue-600 font-bold">GET</span>
                     <h3 class="text-lg font-semibold text-gray-700 mt-2">TikTok Download</h3>
-                    <a href="/api/downloader/tiktok?url=https://vt.tiktok.com/ZSjnf5voB/" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
+                    <a href="/api/downloader/tiktok" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
                         Try
                     </a>
                 </div>
 
-                <div class="endpoint bg-white p-6 rounded-lg shadow-md hover-card transition duration-300 slide-down delay-3">
+                <div class="endpoint bg-white p-6 rounded-lg shadow-md hover-card transition duration-300 slide-down">
                     <span class="text-blue-600 font-bold">GET</span>
                     <h3 class="text-lg font-semibold text-gray-700 mt-2">YTMP3 Download</h3>
-                    <a href="/api/downloader/ytmp3?url=https://youtu.be/AURkGj0jEx4" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
+                    <a href="/api/downloader/ytmp3" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
                         Try
                     </a>
                 </div>
 
-                <div class="endpoint bg-white p-6 rounded-lg shadow-md hover-card transition duration-300 slide-down delay-3">
+                <div class="endpoint bg-white p-6 rounded-lg shadow-md hover-card transition duration-300 slide-down">
                     <span class="text-blue-600 font-bold">GET</span>
                     <h3 class="text-lg font-semibold text-gray-700 mt-2">YTMP4 Download</h3>
-                    <a href="/api/downloader/ytmp4?url=https://youtu.be/AURkGj0jEx4" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
-                        Try
-                    </a>
-                </div>
-
-                <div class="endpoint bg-white p-6 rounded-lg shadow-md hover-card transition duration-300 slide-down delay-3">
-                    <span class="text-blue-600 font-bold">GET</span>
-                    <h3 class="text-lg font-semibold text-gray-700 mt-2">Spotify Search</h3>
-                    <a href="/api/downloader/spotifys?judul=hujan" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
+                    <a href="/api/downloader/ytmp4" target="_blank" class="block mt-3 text-white py-2 px-4 rounded transition text-center btn-gradient">
                         Try
                     </a>
                 </div>
@@ -107,7 +131,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 mt-10 slide-down delay-3">
+    <footer class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 mt-10 slide-down">
         <div class="container mx-auto text-center">
             <p>&copy; 2025 - 2026 FAJAR API. All rights reserved.</p>
         </div>
@@ -125,7 +149,7 @@
 
             items.forEach(item => {
                 let title = item.querySelector('h3').innerText.toLowerCase();
-                if (title.includes(input)) {
+                if (title.includes(input) || [...input].some(char => title.includes(char))) {
                     item.style.display = "block";
                 } else {
                     item.style.display = "none";
