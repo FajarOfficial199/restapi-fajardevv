@@ -3,34 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fajar API - Modern & Clean UI</title>
+    <title>Fajar API - Downloader</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Gradient Background */
         .gradient-bg {
             background: linear-gradient(90deg, #4F46E5, #9333EA);
         }
 
-        /* Animasi Slide Sidebar */
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-            width: 280px;
-        }
-
-        /* Blur Effect ketika sidebar terbuka */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            z-index: 40;
-            display: none;
-        }
-
-        /* Animasi teks */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -47,35 +26,12 @@
 </head>
 <body class="bg-gray-100 text-gray-900">
 
-    <!-- Overlay Blur -->
-    <div id="overlay" class="overlay"></div>
-
     <!-- Navbar -->
-    <header class="gradient-bg text-white shadow-lg p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <!-- Burger Menu -->
-            <div class="cursor-pointer" id="menuToggle">
-                <div class="w-7 h-1 bg-white mb-1"></div>
-                <div class="w-7 h-1 bg-white mb-1"></div>
-                <div class="w-7 h-1 bg-white"></div>
-            </div>
-            <h1 class="text-2xl font-bold">Fajar API</h1>
-            <input id="searchInput" type="text" placeholder="Search API..." 
-                class="p-2 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white transition">
-        </div>
+    <header class="gradient-bg text-white p-4 flex justify-between items-center shadow-lg">
+        <h1 class="text-2xl font-bold">Fajar API</h1>
+        <input id="searchInput" type="text" placeholder="Search API..." 
+            class="p-2 rounded-lg text-gray-900 focus:outline-none transition">
     </header>
-
-    <!-- Sidebar Menu -->
-    <div id="sideMenu" class="fixed left-0 top-0 h-full bg-white shadow-lg sidebar transform -translate-x-full z-50">
-        <div class="p-6">
-            <button id="closeMenu" class="text-gray-600 text-lg font-bold">&times;</button>
-            <h2 class="text-xl font-bold text-gray-800 mt-2">Menu</h2>
-            <ul class="mt-4 space-y-3">
-                <li><a href="https://wa.me/1234567890" class="block text-blue-500 hover:text-blue-700">WhatsApp</a></li>
-                <li><a href="mailto:email@example.com" class="block text-blue-500 hover:text-blue-700">Email</a></li>
-            </ul>
-        </div>
-    </div>
 
     <!-- Hero Section -->
     <section class="bg-gradient-to-r from-purple-500 to-indigo-500 text-white py-20 text-center">
@@ -86,73 +42,93 @@
         </button>
     </section>
 
+    <!-- Total Requests -->
+    <div class="container mx-auto mt-8 p-4 bg-white rounded-lg shadow-md text-center">
+        <h2 class="text-2xl font-bold">Total API Requests</h2>
+        <p class="text-xl mt-2 text-blue-600" id="totalRequests">0</p>
+    </div>
+
     <!-- Main Content -->
-    <main class="container mx-auto mt-10 p-4 transition-all duration-300" id="mainContent">
+    <main class="container mx-auto mt-10 p-4">
         <h2 class="text-3xl font-semibold text-center mb-6 text-gray-800">Download Endpoints</h2>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="apiList">
             <!-- API Cards -->
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+            <div class="api-card bg-white p-6 rounded-lg shadow-md">
                 <span class="text-blue-600 font-semibold">GET</span>
                 <h3 class="text-xl font-bold mt-2">TikTok Download</h3>
                 <p class="text-gray-600 mt-2">Unduh video TikTok tanpa watermark.</p>
-                <a href="/api/downloader/tiktok" target="_blank" 
-                    class="block mt-4 px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center rounded-lg hover:opacity-80 transition">
-                    Try Now
-                </a>
+                <a href="#" class="api-link block mt-4 px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center rounded-lg">Try Now</a>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+            <div class="api-card bg-white p-6 rounded-lg shadow-md">
                 <span class="text-blue-600 font-semibold">GET</span>
                 <h3 class="text-xl font-bold mt-2">YTMP3 Download</h3>
                 <p class="text-gray-600 mt-2">Konversi video YouTube ke MP3.</p>
-                <a href="/api/downloader/ytmp3" target="_blank" 
-                    class="block mt-4 px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center rounded-lg hover:opacity-80 transition">
-                    Try Now
-                </a>
+                <a href="#" class="api-link block mt-4 px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center rounded-lg">Try Now</a>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+            <div class="api-card bg-white p-6 rounded-lg shadow-md">
                 <span class="text-blue-600 font-semibold">GET</span>
                 <h3 class="text-xl font-bold mt-2">Spotify Download</h3>
                 <p class="text-gray-600 mt-2">Unduh lagu dari Spotify dalam format MP3.</p>
-                <a href="/api/downloader/spotify" target="_blank" 
-                    class="block mt-4 px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center rounded-lg hover:opacity-80 transition">
-                    Try Now
-                </a>
+                <a href="#" class="api-link block mt-4 px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center rounded-lg">Try Now</a>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="gradient-bg text-white p-6 mt-10">
-        <div class="container mx-auto text-center">
-            <p>&copy; 2025 FAJAR API. All rights reserved.</p>
-        </div>
+    <footer class="gradient-bg text-white p-6 mt-10 text-center">
+        <p>&copy; 2025 FAJAR API. All rights reserved.</p>
     </footer>
 
     <!-- JavaScript -->
     <script>
-        const menuToggle = document.getElementById("menuToggle");
-        const sideMenu = document.getElementById("sideMenu");
-        const overlay = document.getElementById("overlay");
-        const closeMenu = document.getElementById("closeMenu");
-        const mainContent = document.getElementById("mainContent");
+        const searchInput = document.getElementById("searchInput");
+        const apiCards = document.querySelectorAll(".api-card");
+        const totalRequestsEl = document.getElementById("totalRequests");
 
-        // Fungsi buka menu
-        menuToggle.addEventListener("click", () => {
-            sideMenu.classList.remove("-translate-x-full");
-            overlay.style.display = "block";
+        // Search Functionality
+        searchInput.addEventListener("input", function () {
+            const query = this.value.toLowerCase();
+            apiCards.forEach(card => {
+                const title = card.querySelector("h3").textContent.toLowerCase();
+                card.style.display = title.includes(query) ? "block" : "none";
+            });
         });
 
-        // Fungsi tutup menu
-        function closeSidebar() {
-            sideMenu.classList.add("-translate-x-full");
-            overlay.style.display = "none";
+        // Fetch Total Requests
+        async function fetchTotalRequests() {
+            try {
+                const response = await fetch("https://restapi-fajardevv.vercel.app/api/total-requests");
+                const data = await response.json();
+                totalRequestsEl.textContent = data.total;
+            } catch (error) {
+                console.error("Error fetching total requests:", error);
+            }
         }
 
-        closeMenu.addEventListener("click", closeSidebar);
-        overlay.addEventListener("click", closeSidebar);
+        fetchTotalRequests();
+
+        // Event Listener for API Links
+        document.querySelectorAll(".api-link").forEach(link => {
+            link.addEventListener("click", async (e) => {
+                e.preventDefault();
+                const apiUrl = "https://restapi-fajardevv.vercel.app/api/downloader/tiktok?url=https://example.com";
+                
+                try {
+                    const response = await fetch(apiUrl);
+                    const result = await response.json();
+                    alert("Request successful! Check console for details.");
+                    console.log(result);
+
+                    // Update request count
+                    fetchTotalRequests();
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            });
+        });
     </script>
 
 </body>
