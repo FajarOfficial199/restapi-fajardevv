@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fajar API</title>
+    <title>Fajar API - Modern & Clean UI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Gradient Background */
@@ -11,7 +11,13 @@
             background: linear-gradient(90deg, #4F46E5, #9333EA);
         }
 
-        /* Blur Background saat Menu terbuka */
+        /* Animasi Slide Sidebar */
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+            width: 280px;
+        }
+
+        /* Blur Effect ketika sidebar terbuka */
         .overlay {
             position: fixed;
             top: 0;
@@ -23,32 +29,37 @@
             z-index: 40;
             display: none;
         }
-        
-        /* Animasi Slide Sidebar */
-        .sidebar {
-            transition: transform 0.3s ease-in-out;
-            width: 250px;
+
+        /* Animasi teks */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 text-gray-900">
 
-    <!-- Overlay (Blur saat menu terbuka) -->
+    <!-- Overlay Blur -->
     <div id="overlay" class="overlay"></div>
 
     <!-- Navbar -->
-    <header class="gradient-bg text-white shadow p-4">
+    <header class="gradient-bg text-white shadow-lg p-4">
         <div class="container mx-auto flex justify-between items-center">
             <!-- Burger Menu -->
             <div class="cursor-pointer" id="menuToggle">
-                <div class="w-7 h-1 bg-white mb-1 transition"></div>
-                <div class="w-7 h-1 bg-white mb-1 transition"></div>
-                <div class="w-7 h-1 bg-white transition"></div>
+                <div class="w-7 h-1 bg-white mb-1"></div>
+                <div class="w-7 h-1 bg-white mb-1"></div>
+                <div class="w-7 h-1 bg-white"></div>
             </div>
-
             <h1 class="text-2xl font-bold">Fajar API</h1>
-
-            <!-- Search Bar -->
             <input id="searchInput" type="text" placeholder="Search API..." 
                 class="p-2 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white transition">
         </div>
@@ -56,63 +67,67 @@
 
     <!-- Sidebar Menu -->
     <div id="sideMenu" class="fixed left-0 top-0 h-full bg-white shadow-lg sidebar transform -translate-x-full z-50">
-        <div class="p-4">
+        <div class="p-6">
             <button id="closeMenu" class="text-gray-600 text-lg font-bold">&times;</button>
             <h2 class="text-xl font-bold text-gray-800 mt-2">Menu</h2>
-            <ul class="mt-4 space-y-2">
+            <ul class="mt-4 space-y-3">
                 <li><a href="https://wa.me/1234567890" class="block text-blue-500 hover:text-blue-700">WhatsApp</a></li>
                 <li><a href="mailto:email@example.com" class="block text-blue-500 hover:text-blue-700">Email</a></li>
             </ul>
         </div>
     </div>
 
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-purple-500 to-indigo-500 text-white py-20 text-center">
+        <h1 class="text-5xl font-extrabold fade-in">Fajar API</h1>
+        <p class="text-lg mt-4 fade-in delay-200">API terbaik untuk kebutuhan downloader kamu!</p>
+        <button class="mt-6 px-6 py-3 bg-white text-purple-600 font-semibold rounded-lg shadow-lg hover:bg-gray-200 transition fade-in delay-400">
+            Explore Now
+        </button>
+    </section>
+
     <!-- Main Content -->
-    <main class="container mx-auto mt-6 p-4 transition-all duration-300" id="mainContent">
-        <div class="bg-white p-6 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-semibold text-gray-800 text-center">Created By Fajar</h2>
-            <p class="text-center text-gray-600">API yang siap membantu kebutuhan downloader kamu!</p>
-        </div>
+    <main class="container mx-auto mt-10 p-4 transition-all duration-300" id="mainContent">
+        <h2 class="text-3xl font-semibold text-center mb-6 text-gray-800">Download Endpoints</h2>
 
-        <!-- Endpoints -->
-        <section class="mt-8">
-            <h2 class="text-2xl font-semibold text-blue-700 mb-4">Download Endpoints</h2>
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <ul id="apiList">
-                    <li class="flex justify-between items-center p-4 border-b hover:bg-gray-200 transition">
-                        <span class="text-blue-600 font-semibold">GET</span>
-                        <span class="text-gray-700">TikTok Download</span>
-                        <a href="/api/downloader/tiktok" target="_blank" 
-                            class="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-80 text-white py-2 px-4 rounded transition">
-                            Try
-                        </a>
-                    </li>
-
-                    <li class="flex justify-between items-center p-4 border-b hover:bg-gray-200 transition">
-                        <span class="text-blue-600 font-semibold">GET</span>
-                        <span class="text-gray-700">YTMP3 Download</span>
-                        <a href="/api/downloader/ytmp3" target="_blank" 
-                            class="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-80 text-white py-2 px-4 rounded transition">
-                            Try
-                        </a>
-                    </li>
-
-                    <li class="flex justify-between items-center p-4 border-b hover:bg-gray-200 transition">
-                        <span class="text-blue-600 font-semibold">GET</span>
-                        <span class="text-gray-700">Spotify Download</span>
-                        <a href="/api/downloader/spotify" target="_blank" 
-                            class="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-80 text-white py-2 px-4 rounded transition">
-                            Try
-                        </a>
-                    </li>
-                </ul>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- API Cards -->
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+                <span class="text-blue-600 font-semibold">GET</span>
+                <h3 class="text-xl font-bold mt-2">TikTok Download</h3>
+                <p class="text-gray-600 mt-2">Unduh video TikTok tanpa watermark.</p>
+                <a href="/api/downloader/tiktok" target="_blank" 
+                    class="block mt-4 px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center rounded-lg hover:opacity-80 transition">
+                    Try Now
+                </a>
             </div>
-        </section>        
+
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+                <span class="text-blue-600 font-semibold">GET</span>
+                <h3 class="text-xl font-bold mt-2">YTMP3 Download</h3>
+                <p class="text-gray-600 mt-2">Konversi video YouTube ke MP3.</p>
+                <a href="/api/downloader/ytmp3" target="_blank" 
+                    class="block mt-4 px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center rounded-lg hover:opacity-80 transition">
+                    Try Now
+                </a>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+                <span class="text-blue-600 font-semibold">GET</span>
+                <h3 class="text-xl font-bold mt-2">Spotify Download</h3>
+                <p class="text-gray-600 mt-2">Unduh lagu dari Spotify dalam format MP3.</p>
+                <a href="/api/downloader/spotify" target="_blank" 
+                    class="block mt-4 px-5 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-center rounded-lg hover:opacity-80 transition">
+                    Try Now
+                </a>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->
-    <footer class="gradient-bg text-white p-4 mt-8">
+    <footer class="gradient-bg text-white p-6 mt-10">
         <div class="container mx-auto text-center">
-            <p>&copy; 2025 - 2026 FAJAR API. All rights reserved.</p>
+            <p>&copy; 2025 FAJAR API. All rights reserved.</p>
         </div>
     </footer>
 
@@ -128,14 +143,12 @@
         menuToggle.addEventListener("click", () => {
             sideMenu.classList.remove("-translate-x-full");
             overlay.style.display = "block";
-            mainContent.style.marginLeft = "250px"; // Dorong konten ke samping
         });
 
         // Fungsi tutup menu
         function closeSidebar() {
             sideMenu.classList.add("-translate-x-full");
             overlay.style.display = "none";
-            mainContent.style.marginLeft = "0";
         }
 
         closeMenu.addEventListener("click", closeSidebar);
