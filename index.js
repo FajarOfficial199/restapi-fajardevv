@@ -216,7 +216,7 @@ app.get('/api/downloader/mediafire', async (req, res) => {
     }
 });
 
-app.get("/cekapikey", (req, res) => {
+app.get("/api/cekapikey", async (req, res) => {
     const apikey = req.query.apikey;
 
     if (!apikey) {
@@ -235,7 +235,7 @@ app.get("/cekapikey", (req, res) => {
     });
 });
 
-app.get("/myapikey", (req, res) => {
+app.get("/api/myapikey", async (req, res) => {
     const userId = req.query.userId;
 
     if (!userId) {
