@@ -74,12 +74,6 @@
             justify-content: center;
         }
 
-        .sidebar-title i {
-            margin-right: 8px;
-            font-size: 22px;
-            color: #FFD700; /* Warna emas */
-        }
-
         /* Menu */
         .menu {
             list-style: none;
@@ -92,6 +86,7 @@
 
         .menu a {
             display: flex;
+            justify-content: space-between;
             align-items: center;
             text-decoration: none;
             color: white;
@@ -109,7 +104,6 @@
 
         /* Ikon Menu */
         .menu i {
-            margin-right: 12px;
             font-size: 18px;
         }
 
@@ -183,10 +177,10 @@
         <button class="close-btn" onclick="toggleSidebar()">✖</button>
         <h2 class="sidebar-title"><i class="fas fa-thumbtack"></i> FEATURES</h2>
         <ul class="menu">
-            <li><a href="#"><i class="fas fa-download"></i> Downloader & Media</a></li>
-            <li><a href="#"><i class="fas fa-search"></i> Search Browsing</a></li>
-            <li><a href="#"><i class="fas fa-gamepad"></i> Game</a></li>
-            <li><a href="#"><i class="fas fa-moon"></i> Islamic</a></li>
+            <li><a href="#"><span><i class="fas fa-download"></i> Downloader & Media</span> <i class="fas fa-chevron-right"></i></a></li>
+            <li><a href="#"><span><i class="fas fa-search"></i> Search Browsing</span> <i class="fas fa-chevron-right"></i></a></li>
+            <li><a href="#"><span><i class="fas fa-gamepad"></i> Game</span> <i class="fas fa-chevron-right"></i></a></li>
+            <li><a href="#"><span><i class="fas fa-moon"></i> Islamic</span> <i class="fas fa-chevron-right"></i></a></li>
         </ul>
     </div>
 
