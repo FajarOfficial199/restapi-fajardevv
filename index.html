@@ -1,164 +1,121 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard API</title>
+    <title>Fajar API</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            margin: 0;
-            padding: 0;
+        .slide-down {
+            animation: slide-down 1s ease-out;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .card h2 {
-            margin: 0;
-            font-size: 18px;
-            color: #333;
-        }
-
-        .card p {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            width: 48%;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .stat-icon {
-            font-size: 24px;
-            width: 40px;
-            height: 40px;
-            background: #eee;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-        }
-
-        .stat-content {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .stat-number {
-            font-size: 20px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .progress-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .progress-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: conic-gradient(#6a11cb 99%, #ddd 1%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            font-weight: bold;
-            color: #333;
-            margin: auto;
-        }
-
-        @media (max-width: 600px) {
-            .stat-item {
-                width: 100%;
+        @keyframes slide-down {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
             }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .gradient-bg {
+            background: linear-gradient(45deg, #4A90E2, #9013FE);
+        }
+
+        .hover-effect:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease-in-out;
         }
     </style>
 </head>
-<body>
 
-    <div class="container">
-        <!-- Selamat Datang -->
-        <div class="card">
-            <h2>Welcome User! 🎉</h2>
-            <p>Selamat datang di Dashboard API.</p>
+<body class="bg-blue-50 text-gray-800">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white shadow p-4 gradient-bg slide-down">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold">Fajar API</h1>
+            <button class="text-white text-lg">🗿</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto mt-6 p-4">
+        <!-- Intro Section -->
+        <div class="bg-blue-100 p-6 rounded shadow-lg slide-down">
+            Create By Fajar
+            <p class="text-lg text-center text-blue-900 font-medium">
+            </p>
         </div>
 
-        <!-- Statistik API -->
-        <div class="card">
-            <h2>Statistik API</h2>
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-icon">📊</div>
-                    <div class="stat-content">
-                        <div class="stat-number">35,000</div>
-                        <div class="stat-label">Total Requests</div>
-                    </div>
+        <section class="mt-8">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-4 slide-down">Download Endpoints</h2>
+            <div class="bg-white p-6 rounded shadow-lg slide-down">
+                <div class="flex justify-between items-center mb-4 border-b pb-2">
+                    <p class="text-gray-700 font-medium">4 Endpoints</p>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-icon">👥</div>
-                    <div class="stat-content">
-                        <div class="stat-number">5,736</div>
-                        <div class="stat-label">Total Visitors</div>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">✅</div>
-                    <div class="stat-content">
-                        <div class="stat-number">34,995</div>
-                        <div class="stat-label">Success</div>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">❌</div>
-                    <div class="stat-content">
-                        <div class="stat-number">5</div>
-                        <div class="stat-label">Failed</div>
-                    </div>
-                </div>
+                <ul>
+                    <!-- Endpoint Item -->
+                    <li class="flex justify-between items-center py-3 border-b hover-effect">
+                        <span class="text-blue-600 font-semibold">GET</span>
+                        <span class="text-gray-700">Tik Tok Download</span>
+                        <a href="/api/downloader/tiktok?url=https://vt.tiktok.com/ZSjnf5voB/" target="_blank"
+                            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition">
+                            Try
+                        </a>
+                    </li>
+                    <!-- Endpoint Item -->
+                    <li class="flex justify-between items-center py-3 border-b hover-effect">
+                        <span class="text-blue-600 font-semibold">GET</span>
+                        <span class="text-gray-700">YTMP3 Download</span>
+                        <a href="/api/downloader/ytmp3?url=https://youtu.be/AURkGj0jEx4?si=f0USJg7M4c39r1t2" target="_blank"
+                            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition">
+                            Try
+                        </a>
+                    </li>
+                    <!-- Endpoint Item -->
+                    <li class="flex justify-between items-center py-3 border-b hover-effect">
+                        <span class="text-blue-600 font-semibold">GET</span>
+                        <span class="text-gray-700">YTMP4 Download</span>
+                        <a href="/api/downloader/ytmp4?url=https://youtu.be/AURkGj0jEx4?si=f0USJg7M4c39r1t2" target="_blank"
+                            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition">
+                            Try
+                        </a>
+                    </li>
+                    <!-- Endpoint Item -->
+                    <li class="flex justify-between items-center py-3 border-b hover-effect">
+                        <span class="text-blue-600 font-semibold">GET</span>
+                        <span class="text-gray-700">Spotify Search</span>
+                        <a href="/api/downloader/spotifys?judul=hujan" target="_blank"
+                            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition">
+                            Try
+                        </a>
+                    </li>
+                    <!-- Endpoint Item -->
+                    <li class="flex justify-between items-center py-3 border-b hover-effect">
+                        <span class="text-blue-600 font-semibold">GET</span>
+                        <span class="text-gray-700">Spotify Download</span>
+                        <a href="/api/downloader/spotify?url=https://open.spotify.com/track/514rhnksEwHUh6LxXsQ4Y9?si=jzow0lr6Qay3yeMJcrEn8A&context=spotify%3Aplaylist%3A37i9dQZF1DX5Ejj0EkURtP"
+                            target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition">
+                            Try
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </div>
+        </section>
+    </main>
 
-        <!-- Persentase API -->
-        <div class="card progress-container">
-            <h2>Persentase API</h2>
-            <div class="progress-circle">99.99%</div>
-            <p>API berjalan dengan sehat dan stabil.</p>
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white p-4 mt-8 gradient-bg slide-down">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 - 2026 FAJAR API. All rights reserved.</p>
         </div>
-    </div>
+    </footer>
 
 </body>
+
 </html>
