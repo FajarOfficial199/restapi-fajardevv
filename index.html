@@ -61,9 +61,9 @@
         <button class="button" onclick="searchAPI()">Search</button>
 
         <h2>Download Endpoints</h2>
-        <a href="#" class="button" onclick="download('tiktok')">Download TikTok</a>
-        <a href="#" class="button" onclick="download('ytmp3')">Download YTMP3</a>
-        <a href="#" class="button" onclick="download('spotify')">Download Spotify</a>
+        <a id="tiktok-btn" href="#" class="button" target="_blank">Download TikTok</a>
+        <a id="ytmp3-btn" href="#" class="button" target="_blank">Download YTMP3</a>
+        <a id="spotify-btn" href="#" class="button" target="_blank">Download Spotify</a>
 
         <p id="total-requests">Total Requests (Local): <span id="request-count">0</span></p>
     </div>
@@ -74,14 +74,13 @@
             alert("Fitur pencarian belum tersedia!"); // Bisa dikembangkan nanti
         }
 
-        function download(type) {
+        function updateDownloadLinks() {
             let url = prompt("Masukkan URL untuk di-download:");
 
             if (url) {
-                let apiUrl = `https://restapi-fajardevv.vercel.app/api/downloader/${type}?url=${encodeURIComponent(url)}`;
-                
-                // Buka link langsung
-                window.open(apiUrl, "_blank");
+                document.getElementById("tiktok-btn").href = `https://restapi-fajardevv.vercel.app/api/downloader/tiktok?url=${encodeURIComponent(url)}`;
+                document.getElementById("ytmp3-btn").href = `https://restapi-fajardevv.vercel.app/api/downloader/ytmp3?url=${encodeURIComponent(url)}`;
+                document.getElementById("spotify-btn").href = `https://restapi-fajardevv.vercel.app/api/downloader/spotify?url=${encodeURIComponent(url)}`;
 
                 // Update total request di local storage
                 let totalRequests = localStorage.getItem("totalRequests") || 0;
@@ -98,8 +97,11 @@
             document.getElementById("request-count").innerText = totalRequests;
         }
 
-        // Update total request saat halaman dimuat
-        updateRequestCount();
+        // Minta URL saat halaman dimuat
+        window.onload = function () {
+            updateDownloadLinks();
+            updateRequestCount();
+        };
     </script>
 </body>
 </html>
