@@ -11,7 +11,7 @@ const { setTimeout: sleep } = require('timers/promises');
 
 //seettingsjs
 const allowedIP = global.allowedIP
-const maintenance = global.maintance
+global.maintenance = true
 const creator = global.creator
 
 
