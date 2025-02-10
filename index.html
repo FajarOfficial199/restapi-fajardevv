@@ -14,11 +14,10 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             align-items: center;
+            padding-top: 70px; /* Tambahkan padding agar tidak ketutupan header */
         }
 
-        /* Header */
         .header {
             width: 100%;
             padding: 15px;
@@ -30,120 +29,25 @@
             position: fixed;
             top: 0;
             left: 0;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             z-index: 1000;
         }
 
-        .hamburger {
-            position: absolute;
-            left: 15px;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -280px;
-            width: 260px;
-            height: 100%;
-            background: linear-gradient(135deg, #1E3A8A, #9333EA);
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            transition: left 0.4s ease-in-out;
-            z-index: 2000;
-            color: white;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar.active {
-            left: 0;
-        }
-
-        /* Sidebar Title */
-        .sidebar-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Menu */
-        .menu {
-            list-style: none;
-            padding: 0;
-        }
-
-        .menu li {
-            margin-bottom: 10px;
-        }
-
-        .menu button, .menu a {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-decoration: none;
-            color: white;
-            font-size: 16px;
-            padding: 12px;
-            border-radius: 8px;
-            transition: background 0.3s ease-in-out;
-            background: rgba(255, 255, 255, 0.1);
-            width: 100%;
-            border: none;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        .menu a:hover, .menu button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .submenu {
-            display: none;
-            padding-left: 20px;
-        }
-
-        .submenu a {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .arrow {
-            transition: transform 0.3s ease;
-        }
-
-        .active .arrow {
-            transform: rotate(90deg);
-        }
-
-        /* Card */
         .card {
             background: white;
-            color: black;
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out;
-            width: 100%;
             margin-bottom: 15px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Battery */
         .battery-bar {
             width: 100%;
             height: 12px;
-            border-radius: 5px;
             background: #e0e0e0;
+            border-radius: 5px;
             overflow: hidden;
             margin-top: 10px;
         }
@@ -154,7 +58,6 @@
             transition: width 0.5s ease-in-out;
         }
 
-        /* Footer */
         .footer {
             text-align: center;
             padding: 15px;
@@ -168,41 +71,19 @@
         }
     </style>
 </head>
-
 <body>
 
     <!-- Header -->
     <header class="header">
-        <span class="hamburger" onclick="toggleSidebar()">☰</span>
         Dashboard API
     </header>
 
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <button class="close-btn" onclick="toggleSidebar()">✖</button>
-        <h2 class="sidebar-title">FEATURES</h2>
-        <ul class="menu">
-            <li><a href="#"><i class="fas fa-download"></i> Downloader & Media <span class="arrow">▶</span></a></li>
-            <li><a href="#"><i class="fas fa-search"></i> Search Browsing <span class="arrow">▶</span></a></li>
-            <li><a href="#"><i class="fas fa-gamepad"></i> Game <span class="arrow">▶</span></a></li>
-            <li>
-                <button onclick="toggleSubmenu('islamic')">
-                    <i class="fas fa-moon"></i> Islamic <span class="arrow">▶</span>
-                </button>
-                <ul class="submenu" id="islamic">
-                    <li><a href="/api/quran"><i class="fas fa-book-open"></i> Quran API</a></li>
-                    <li><a href="/api/prayer"><i class="fas fa-pray"></i> Prayer Time API</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-
-    <!-- Main Content -->  
-<main class="container">  
-    <div class="card">  
-        <h2>Jakarta Time (WIB)</h2>  
-        <p id="jakartaTime">Loading...</p>  
-    </div>
+    <!-- Main Content -->
+    <main>
+        <div class="card">
+            <h2>Jakarta Time (WIB)</h2>
+            <p id="jakartaTime">Loading...</p>
+        </div>
 
         <div class="card">
             <h2>IP Address</h2>
@@ -223,32 +104,43 @@
         REST APIS CREATED BY @ FAJAR OFFICIAL
     </footer>
 
-    <script>  
-    function toggleSidebar() {  
-        document.getElementById("sidebar").classList.toggle("active");  
-    }  
+    <script>
+        // 1. Menampilkan Jam Jakarta
+        function getJakartaTime() {
+            document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
+        }
+        setInterval(getJakartaTime, 1000);
+        getJakartaTime();
 
-    function toggleSubmenu(id) {  
-        let submenu = document.getElementById(id);  
-        let parent = submenu.parentElement;  
+        // 2. Menampilkan IP Address
+        async function getIPAddress() {
+            try {
+                let response = await fetch("https://api64.ipify.org?format=json");
+                let data = await response.json();
+                document.getElementById("ipAddress").textContent = data.ip;
+            } catch (error) {
+                document.getElementById("ipAddress").textContent = "Gagal mengambil IP";
+            }
+        }
+        getIPAddress();
 
-        if (submenu.style.display === "block") {  
-            submenu.style.display = "none";  
-            parent.classList.remove("active");  
-        } else {  
-            submenu.style.display = "block";  
-            parent.classList.add("active");  
-        }  
-    }  
-
-    function getJakartaTime() {  
-        document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });  
-    }  
-
-    window.onload = function () {  
-        getJakartaTime();  
-        setInterval(getJakartaTime, 1000);  
-    };  
+        // 3. Menampilkan Status Baterai
+        async function getBatteryStatus() {
+            if ("getBattery" in navigator) {
+                let battery = await navigator.getBattery();
+                function updateBattery() {
+                    let level = Math.floor(battery.level * 100);
+                    document.getElementById("batteryPercentage").textContent = level + "%";
+                    document.getElementById("batteryLevelIndicator").style.width = level + "%";
+                    document.getElementById("batteryLevelIndicator").style.background = level > 20 ? "green" : "red";
+                }
+                updateBattery();
+                battery.addEventListener("levelchange", updateBattery);
+            } else {
+                document.getElementById("batteryPercentage").textContent = "Battery API tidak didukung";
+            }
+        }
+        getBatteryStatus();
     </script>
 
 </body>
