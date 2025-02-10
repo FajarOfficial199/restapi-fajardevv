@@ -16,6 +16,7 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
+            padding-top: 80px; /* Tambahkan padding agar tidak ketutupan header */
         }
 
         /* Header */
@@ -34,6 +35,13 @@
             z-index: 1000;
         }
 
+        /* Main Content */
+        .container {
+            width: 90%;
+            max-width: 400px;
+            margin-top: 20px; /* Beri jarak ekstra dari header */
+        }
+
         /* Card */
         .card {
             background: white;
@@ -42,9 +50,9 @@
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease-in-out;
-            width: 90%;
-            max-width: 400px;
+            width: 100%;
             margin-bottom: 15px;
+            text-align: left;
         }
 
         .card:hover {
@@ -90,17 +98,17 @@
 
 <!-- Main Content -->
 <main class="container">
-    <div class="card text-left">
+    <div class="card">
         <h2>Jakarta Time (WIB)</h2>
         <p id="jakartaTime">Loading...</p>
     </div>
 
-    <div class="card text-left">
+    <div class="card">
         <h2>IP Address</h2>
         <p id="ipAddress">Loading...</p>
     </div>
 
-    <div class="card text-left">
+    <div class="card">
         <h2>Battery Status</h2>
         <div class="battery-bar">
             <div id="batteryLevelIndicator" class="battery-fill"></div>
