@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard API</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/YOUR_FA_KIT.js" crossorigin="anonymous"></script>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -30,87 +31,102 @@
             top: 0;
             left: 0;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            z-index: 10;
+            z-index: 1000;
+        }
+
+        .hamburger {
+            position: absolute;
+            left: 15px;
+            font-size: 22px;
+            cursor: pointer;
         }
 
         /* Sidebar */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: -280px;
-    width: 260px;
-    height: 100%;
-    background: linear-gradient(135deg, #1E3A8A, #9333EA);
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    transition: left 0.5s ease-in-out;
-    z-index: 20;
-    color: white;
-}
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 260px;
+            height: 100%;
+            background: linear-gradient(135deg, #1E3A8A, #9333EA);
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            transition: left 0.4s ease-in-out;
+            z-index: 2000;
+            color: white;
+        }
 
-.sidebar.active {
-    left: 0;
-}
+        .sidebar.active {
+            left: 0;
+        }
 
-.sidebar-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    color: #fff;
-    text-align: center;
-}
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            text-align: center;
+        }
 
-/* Menu */
-.menu {
-    list-style: none;
-    padding: 0;
-}
+        .menu {
+            list-style: none;
+            padding: 0;
+        }
 
-.menu li {
-    margin-bottom: 10px;
-}
+        .menu li {
+            margin-bottom: 10px;
+        }
 
-.menu a, .dropdown-btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    padding: 12px;
-    border-radius: 5px;
-    transition: background 0.3s ease-in-out;
-    width: 100%;
-    border: none;
-    background: none;
-    cursor: pointer;
-    text-align: left;
-}
+        .menu a, .dropdown-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 5px;
+            transition: background 0.3s ease-in-out;
+            width: 100%;
+            border: none;
+            background: none;
+            cursor: pointer;
+            text-align: left;
+        }
 
-.menu a i, .dropdown-btn i {
-    margin-right: 10px;
-}
+        .menu a i, .dropdown-btn i {
+            margin-right: 10px;
+        }
 
-.menu a:hover, .dropdown-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
+        .menu a:hover, .dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
 
-/* Dropdown */
-.submenu {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-in-out;
-    padding-left: 20px;
-}
+        /* Dropdown */
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+            padding-left: 20px;
+        }
 
-.dropdown-btn span.arrow {
-    transition: transform 0.3s ease-in-out;
-}
+        .dropdown-btn span.arrow {
+            transition: transform 0.3s ease-in-out;
+        }
 
-.dropdown-btn.active span.arrow {
-    transform: rotate(90deg);
-}
+        .dropdown-btn.active span.arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Main Content */
+        .container {
+            margin-top: 80px;
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
         /* Card */
         .card {
@@ -120,10 +136,8 @@
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease-in-out;
-            width: 90%;
-            max-width: 400px;
+            width: 100%;
             margin-bottom: 15px;
-            margin-top: 80px;
         }
 
         .card:hover {
@@ -136,8 +150,8 @@
             height: 8px;
             border-radius: 5px;
             background: #e0e0e0;
-            position: relative;
             overflow: hidden;
+            margin-top: 10px;
         }
 
         .battery-fill {
@@ -171,66 +185,43 @@
     </header>
 
     <!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-    <button class="close-btn" onclick="toggleSidebar()">✖</button>
-    <h2 class="sidebar-title">📌 FEATURES</h2>
-    <ul class="menu">
-        <li>
-            <a href="#">
-                <i class="fas fa-download"></i>
-                <span>Downloader & Media</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fas fa-search"></i>
-                <span>Search Browsing</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fas fa-gamepad"></i>
-                <span>Game</span>
-            </a>
-        </li>
-        <li>
-            <button class="dropdown-btn" onclick="toggleSubmenu('islamic')">
-                <i class="fas fa-moon"></i>
-                <span>Islamic</span>
-                <span class="arrow">▶</span>
-            </button>
-            <ul class="submenu" id="islamic">
-                <li><a href="/api/fitur?query=" target="_blank">Tambahin...</a></li>
-                <li><a href="/api/quran" target="_blank">Quran API</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fas fa-robot"></i>
-                <span>Artificial Intelligence</span>
-            </a>
-        </li>
-    </ul>
-</div>
+    <div class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">✖</button>
+        <h2 class="sidebar-title">📌 FEATURES</h2>
+        <ul class="menu">
+            <li><a href="#"><i class="fas fa-download"></i> Downloader & Media</a></li>
+            <li><a href="#"><i class="fas fa-search"></i> Search Browsing</a></li>
+            <li><a href="#"><i class="fas fa-gamepad"></i> Game</a></li>
+            <li>
+                <button class="dropdown-btn" onclick="toggleSubmenu('islamic')">
+                    <i class="fas fa-moon"></i> Islamic <span class="arrow">▶</span>
+                </button>
+                <ul class="submenu" id="islamic">
+                    <li><a href="/api/fitur?query=" target="_blank">Tambahin...</a></li>
+                    <li><a href="/api/quran" target="_blank">Quran API</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 
     <!-- Konten Utama -->
-    <main class="container flex flex-col items-center p-6">
+    <main class="container">
         <div class="card">
-            <h2 class="text-gray-600 text-sm">Jakarta Time (WIB)</h2>
-            <p class="text-xl font-semibold text-gray-900" id="jakartaTime">Loading...</p>
+            <h2>Jakarta Time (WIB)</h2>
+            <p id="jakartaTime">Loading...</p>
         </div>
 
         <div class="card">
-            <h2 class="text-gray-600 text-sm">IP Address</h2>
-            <p class="text-xl font-semibold text-gray-900" id="ipAddress">Loading...</p>
+            <h2>IP Address</h2>
+            <p id="ipAddress">Loading...</p>
         </div>
 
         <div class="card">
-            <h2 class="text-gray-600 text-sm">Battery Status</h2>
-            <div class="battery-bar mt-2">
+            <h2>Battery Status</h2>
+            <div class="battery-bar">
                 <div id="batteryLevelIndicator" class="battery-fill"></div>
             </div>
-            <span id="batteryPercentage" class="text-xl font-semibold text-green-600">0%</span>
+            <span id="batteryPercentage">0%</span>
         </div>
     </main>
 
@@ -240,62 +231,34 @@
     </footer>
 
     <script>
-    function toggleSidebar() {
-    document.getElementById("sidebar").classList.toggle("active");
-}
-
-function toggleSubmenu(id) {
-    const submenu = document.getElementById(id);
-    const btn = submenu.previousElementSibling;
-    submenu.style.maxHeight = submenu.style.maxHeight ? null : submenu.scrollHeight + "px";
-    btn.classList.toggle("active");
-}
-
-    async function getIPAddress() {
-        try {
-            let response = await fetch('https://api64.ipify.org?format=json');
-            let data = await response.json();
-            document.getElementById("ipAddress").textContent = data.ip;
-        } catch (error) {
-            document.getElementById("ipAddress").textContent = "Gagal mendapatkan IP";
-        }
-    }
-
-    function getJakartaTime() {
-        document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
-    }
-
-    async function getBatteryStatus() {
-        if (!navigator.getBattery) {
-            document.getElementById("batteryPercentage").textContent = "Tidak didukung di browser ini";
-            document.getElementById("batteryLevelIndicator").style.width = "0%";
-            document.getElementById("batteryLevelIndicator").style.backgroundColor = "gray";
-            return;
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("active");
         }
 
-        try {
-            let battery = await navigator.getBattery();
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(id);
+            submenu.style.maxHeight = submenu.style.maxHeight ? null : submenu.scrollHeight + "px";
+        }
 
-            function updateBatteryInfo() {
-                let level = Math.round(battery.level * 100);
-                document.getElementById("batteryPercentage").textContent = level + "%";
-                document.getElementById("batteryLevelIndicator").style.width = level + "%";
-                document.getElementById("batteryLevelIndicator").style.backgroundColor = level < 20 ? "red" : "green";
+        async function getIPAddress() {
+            try {
+                let response = await fetch('https://api64.ipify.org?format=json');
+                let data = await response.json();
+                document.getElementById("ipAddress").textContent = data.ip;
+            } catch {
+                document.getElementById("ipAddress").textContent = "Gagal mendapatkan IP";
             }
-
-            updateBatteryInfo();
-            battery.addEventListener("levelchange", updateBatteryInfo);
-        } catch (error) {
-            document.getElementById("batteryPercentage").textContent = "Error mendapatkan status baterai";
         }
-    }
 
-    window.onload = function () {
-        getIPAddress();
-        getJakartaTime();
-        getBatteryStatus();
-        setInterval(getJakartaTime, 1000); // Update jam setiap detik
-    };
+        function getJakartaTime() {
+            document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
+        }
+
+        window.onload = function () {
+            getIPAddress();
+            getJakartaTime();
+            setInterval(getJakartaTime, 1000);
+        };
     </script>
 
 </body>
