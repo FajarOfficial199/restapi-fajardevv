@@ -57,37 +57,31 @@
         <h1>Fajar API Downloader</h1>
         <p>API terbaik untuk kebutuhan downloader kamu!</p>
 
-        <input type="text" id="search" placeholder="Cari API...">
-        <button class="button" onclick="searchAPI()">Search</button>
+        <input type="text" id="url-input" placeholder="Masukkan URL video...">
+        <button class="button" onclick="updateLinks()">Set URL</button>
 
         <h2>Download Endpoints</h2>
-        <a id="tiktok-btn" href="#" class="button" target="_blank">Download TikTok</a>
-        <a id="ytmp3-btn" href="#" class="button" target="_blank">Download YTMP3</a>
-        <a id="spotify-btn" href="#" class="button" target="_blank">Download Spotify</a>
+        <a id="tiktok-btn" href="/api/downloader/tiktok?url=" class="button" target="_blank">Download TikTok</a>
+        <a id="ytmp3-btn" href="/api/downloader/ytmp3?url=" class="button" target="_blank">Download YTMP3</a>
+        <a id="spotify-btn" href="/api/downloader/spotify?url=" class="button" target="_blank">Download Spotify</a>
 
         <p id="total-requests">Total Requests (Local): <span id="request-count">0</span></p>
     </div>
 
     <script>
-        function searchAPI() {
-            let query = document.getElementById("search").value.toLowerCase();
-            alert("Fitur pencarian belum tersedia!"); // Bisa dikembangkan nanti
-        }
-
-        function updateDownloadLinks() {
-            let url = prompt("Masukkan URL untuk di-download:");
+        function updateLinks() {
+            let url = document.getElementById("url-input").value.trim();
 
             if (url) {
-                document.getElementById("tiktok-btn").href = `https://restapi-fajardevv.vercel.app/api/downloader/tiktok?url=${encodeURIComponent(url)}`;
-                document.getElementById("ytmp3-btn").href = `https://restapi-fajardevv.vercel.app/api/downloader/ytmp3?url=${encodeURIComponent(url)}`;
-                document.getElementById("spotify-btn").href = `https://restapi-fajardevv.vercel.app/api/downloader/spotify?url=${encodeURIComponent(url)}`;
+                document.getElementById("tiktok-btn").href = `/api/downloader/tiktok?url=${encodeURIComponent(url)}`;
+                document.getElementById("ytmp3-btn").href = `/api/downloader/ytmp3?url=${encodeURIComponent(url)}`;
+                document.getElementById("spotify-btn").href = `/api/downloader/spotify?url=${encodeURIComponent(url)}`;
 
-                // Update total request di local storage
+                // Update total request hanya jika ada URL
                 let totalRequests = localStorage.getItem("totalRequests") || 0;
                 totalRequests = parseInt(totalRequests) + 1;
                 localStorage.setItem("totalRequests", totalRequests);
 
-                // Perbarui tampilan total request
                 document.getElementById("request-count").innerText = totalRequests;
             }
         }
@@ -97,9 +91,8 @@
             document.getElementById("request-count").innerText = totalRequests;
         }
 
-        // Minta URL saat halaman dimuat
+        // Update tampilan total request saat halaman dimuat
         window.onload = function () {
-            updateDownloadLinks();
             updateRequestCount();
         };
     </script>
