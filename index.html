@@ -11,6 +11,18 @@
             background-color: #f8f9fa;
         }
 
+        /* Overlay untuk menghindari gangguan saat sidebar dibuka */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 10;
+        }
+
         /* Sidebar */
         .sidebar {
             position: fixed;
@@ -22,10 +34,15 @@
             box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
             padding: 20px;
             transition: left 0.4s ease-in-out;
+            z-index: 20;
         }
 
         .sidebar.active {
             left: 0;
+        }
+
+        .overlay.active {
+            display: block;
         }
 
         .close-btn {
@@ -56,6 +73,7 @@
         .menu a {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             text-decoration: none;
             color: white;
             font-size: 16px;
@@ -66,6 +84,17 @@
 
         .menu a:hover {
             background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Dropdown Menu */
+        .submenu {
+            display: none;
+            padding-left: 20px;
+        }
+
+        .submenu a {
+            font-size: 14px;
+            padding: 8px 10px;
         }
 
         /* Kartu Informasi */
@@ -116,6 +145,9 @@
 
 <body>
 
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
     <!-- Header -->
     <header class="header">
         <span class="hamburger" onclick="toggleSidebar()">☰</span>
@@ -130,19 +162,17 @@
             <li><a href="#">⬇ Downloader & Media</a></li>
             <li><a href="#">🔍 Search Browsing</a></li>
             <li><a href="#">💻 Game</a></li>
-            <li><a href="#">🌙 Islamic</a></li>
+            <li><a href="#" onclick="toggleSubmenu('islamic')">🌙 Islamic <span>▶</span></a></li>
+            <ul class="submenu" id="islamic">
+                <li><a href="/api/fitur?query=" target="_blank">Tambahin...</a></li>
+                <li><a href="/api/quran" target="_blank">Quran API</a></li>
+            </ul>
             <li><a href="#">🤖 Artificial Intelligence</a></li>
-            <li><a href="#">⭐ Stalker</a></li>
-            <li><a href="#">🖼️ Random APIs</a></li>
-            <li><a href="#">⚠️ NSFW</a></li>
-            <li><a href="#">🛠️ Tools API</a></li>
-            <li><a href="#">😊 Sticker & Canvas</a></li>
         </ul>
     </div>
 
     <!-- Konten Utama -->
     <main class="container mx-auto p-6 mt-6">
-        <!-- Kotak IP Address -->
         <div class="card flex items-center justify-between mb-4">
             <div>
                 <h2 class="text-gray-600 text-sm">IP Address</h2>
@@ -151,16 +181,6 @@
             <i class="icon">📶</i>
         </div>
 
-        <!-- Total Visitor -->
-        <div class="card flex items-center justify-between mb-4">
-            <div>
-                <h2 class="text-gray-600 text-sm">Total Visitor</h2>
-                <p class="text-xl font-semibold text-gray-900">24,597,776</p>
-            </div>
-            <i class="icon">👁️</i>
-        </div>
-
-        <!-- Tanggal -->
         <div class="card flex items-center justify-between mb-4">
             <div>
                 <h2 class="text-gray-600 text-sm">Date</h2>
@@ -169,7 +189,6 @@
             <i class="icon">📅</i>
         </div>
 
-        <!-- Baterai -->
         <div class="card">
             <div class="flex justify-between items-center">
                 <h2 class="text-gray-600 text-sm">Battery Status</h2>
@@ -183,7 +202,15 @@
 
     <script>
         function toggleSidebar() {
-            document.getElementById("sidebar").classList.toggle("active");
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("overlay");
+            sidebar.classList.toggle("active");
+            overlay.classList.toggle("active");
+        }
+
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(id);
+            submenu.style.display = submenu.style.display === "block" ? "none" : "block";
         }
 
         async function getIpAddress() {
@@ -199,8 +226,7 @@
 
         function updateDate() {
             const now = new Date();
-            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-            document.getElementById('currentDate').innerText = now.toLocaleDateString('id-ID', options);
+            document.getElementById('currentDate').innerText = now.toLocaleDateString('id-ID');
         }
         updateDate();
 
@@ -211,12 +237,6 @@
                     const batteryLevel = Math.round(battery.level * 100);
                     document.getElementById('batteryPercentage').innerText = `${batteryLevel}%`;
                     document.getElementById('batteryLevelIndicator').style.width = `${batteryLevel}%`;
-
-                    let batteryColor = 'green';
-                    if (batteryLevel < 50) batteryColor = 'yellow';
-                    if (batteryLevel < 20) batteryColor = 'red';
-
-                    document.getElementById('batteryLevelIndicator').style.background = batteryColor;
                 }
                 updateBatteryInfo();
                 battery.addEventListener('levelchange', updateBatteryInfo);
