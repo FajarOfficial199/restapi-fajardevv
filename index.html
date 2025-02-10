@@ -205,13 +205,13 @@
     <!-- Konten Utama -->
     <main class="container flex flex-col items-center p-6">
         <div class="card">
-            <h2 class="text-gray-600 text-sm">IP Address</h2>
-            <p class="text-xl font-semibold text-gray-900" id="ipAddress">Loading...</p>
+            <h2 class="text-gray-600 text-sm">Jakarta Time (WIB)</h2>
+            <p class="text-xl font-semibold text-gray-900" id="jakartaTime">Loading...</p>
         </div>
 
         <div class="card">
-            <h2 class="text-gray-600 text-sm">Date</h2>
-            <p class="text-xl font-semibold text-gray-900" id="currentDate">Loading...</p>
+            <h2 class="text-gray-600 text-sm">IP Address</h2>
+            <p class="text-xl font-semibold text-gray-900" id="ipAddress">Loading...</p>
         </div>
 
         <div class="card">
@@ -236,54 +236,26 @@
         function toggleSubmenu(id) {
             const submenu = document.getElementById(id);
             const btn = submenu.previousElementSibling;
-            if (submenu.style.maxHeight) {
-                submenu.style.maxHeight = null;
-            } else {
-                submenu.style.maxHeight = submenu.scrollHeight + "px";
-            }
+            submenu.style.maxHeight = submenu.style.maxHeight ? null : submenu.scrollHeight + "px";
             btn.classList.toggle("active");
             btn.querySelector("span").textContent = submenu.style.maxHeight ? "▼" : "▶";
         }
 
         async function getIPAddress() {
-        try {
             let response = await fetch('https://api64.ipify.org?format=json');
             let data = await response.json();
             document.getElementById("ipAddress").textContent = data.ip;
-        } catch (error) {
-            document.getElementById("ipAddress").textContent = "Gagal mendapatkan IP";
         }
-    }
 
-    // Fungsi untuk mendapatkan tanggal dan waktu Jakarta (WIB)
-    function getJakartaTime() {
-        let options = { timeZone: "Asia/Jakarta", hour12: false };
-        let now = new Date().toLocaleString("id-ID", options);
-        document.getElementById("jakartaTime").textContent = now;
-    }
+        function getJakartaTime() {
+            document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
+        }
 
-    // Fungsi untuk mendapatkan status baterai
-    function getBatteryStatus() {
-        navigator.getBattery().then(battery => {
-            function updateBatteryInfo() {
-                let level = battery.level * 100;
-                document.getElementById("batteryPercentage").textContent = level + "%";
-                document.getElementById("batteryLevelIndicator").style.width = level + "%";
-                document.getElementById("batteryLevelIndicator").style.backgroundColor = level < 20 ? "red" : "green";
-            }
-
-            updateBatteryInfo();
-            battery.addEventListener("levelchange", updateBatteryInfo);
-        });
-    }
-
-    // Jalankan fungsi saat halaman dimuat
-    window.onload = function () {
-        getIPAddress();
-        getJakartaTime();
-        getBatteryStatus();
-        setInterval(getJakartaTime, 1000); // Update jam setiap detik
-    };
+        window.onload = function () {
+            getIPAddress();
+            getJakartaTime();
+            setInterval(getJakartaTime, 1000);
+        };
     </script>
 
 </body>
