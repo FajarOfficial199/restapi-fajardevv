@@ -1,4 +1,4 @@
-const express = require("express");
+var express = require("express"), cors = require("cors"), secure = require("ssl-express-www");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
