@@ -1,5 +1,5 @@
-require('../settings')
-var creator = require('./settings')
+require('../../settings')
+var creator = require('../../settings')
 const cloudscraper = require("cloudscraper");
 
 async function fetchData(url) {
