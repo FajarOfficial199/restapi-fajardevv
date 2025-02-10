@@ -235,7 +235,7 @@ app.get("/api/cekapikey", async (req, res) => {
     });
 });
 
-app.get("/api/myapikey", async (req, res) => {
+app.get("/api/myapikey", (req, res) => {
     const userId = req.query.userId;
 
     if (!userId) {
