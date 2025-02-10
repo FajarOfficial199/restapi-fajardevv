@@ -84,7 +84,7 @@
             margin-bottom: 10px;
         }
 
-        .menu a {
+        .menu button, .menu a {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -95,26 +95,31 @@
             border-radius: 8px;
             transition: background 0.3s ease-in-out;
             background: rgba(255, 255, 255, 0.1);
-        }
-
-        .menu a:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-        }
-
-        /* Ikon Menu */
-        .menu i {
-            font-size: 18px;
-        }
-
-        /* Main Content */
-        .container {
-            margin-top: 100px; /* Ditinggikan */
             width: 100%;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .menu a:hover, .menu button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .submenu {
+            display: none;
+            padding-left: 20px;
+        }
+
+        .submenu a {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .active .arrow {
+            transform: rotate(90deg);
         }
 
         /* Card */
@@ -173,20 +178,13 @@
     </header>
 
     <!-- Sidebar -->
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <button class="close-btn" onclick="toggleSidebar()">✖</button>
         <h2 class="sidebar-title">FEATURES</h2>
         <ul class="menu">
-            <li>
-                <a href="#"><i class="fas fa-download"></i> Downloader & Media <span class="arrow">▶</span></a>
-            </li>
-            <li>
-                <a href="#"><i class="fas fa-search"></i> Search Browsing <span class="arrow">▶</span></a>
-            </li>
-            <li>
-                <a href="#"><i class="fas fa-gamepad"></i> Game <span class="arrow">▶</span></a>
-            </li>
+            <li><a href="#"><i class="fas fa-download"></i> Downloader & Media <span class="arrow">▶</span></a></li>
+            <li><a href="#"><i class="fas fa-search"></i> Search Browsing <span class="arrow">▶</span></a></li>
+            <li><a href="#"><i class="fas fa-gamepad"></i> Game <span class="arrow">▶</span></a></li>
             <li>
                 <button onclick="toggleSubmenu('islamic')">
                     <i class="fas fa-moon"></i> Islamic <span class="arrow">▶</span>
@@ -199,7 +197,7 @@
         </ul>
     </div>
 
-    <!-- Konten Utama -->
+    <!-- Main Content -->
     <main class="container">
         <div class="card">
             <h2>Jakarta Time (WIB)</h2>
@@ -243,33 +241,11 @@
             }
         }
 
-        async function getIPAddress() {
-            try {
-                let response = await fetch('https://api64.ipify.org?format=json');
-                let data = await response.json();
-                document.getElementById("ipAddress").textContent = data.ip;
-            } catch {
-                document.getElementById("ipAddress").textContent = "Gagal mendapatkan IP";
-            }
-        }
-
         function getJakartaTime() {
             document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
         }
 
-        navigator.getBattery().then(function(battery) {
-            function updateBatteryStatus() {
-                let level = battery.level * 100;
-                document.getElementById("batteryPercentage").textContent = level + "%";
-                document.getElementById("batteryLevelIndicator").style.width = level + "%";
-                document.getElementById("batteryLevelIndicator").style.background = level > 50 ? "green" : level > 20 ? "orange" : "red";
-            }
-            updateBatteryStatus();
-            battery.onlevelchange = updateBatteryStatus;
-        });
-
         window.onload = function () {
-            getIPAddress();
             getJakartaTime();
             setInterval(getJakartaTime, 1000);
         };
