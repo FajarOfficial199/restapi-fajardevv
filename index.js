@@ -22,6 +22,7 @@ app.enable("trust proxy");
 app.set("json spaces", 2);
 app.use(cors());
 app.use(secure);
+app.use(cookieParser());
 
 
 // Endpoint untuk servis dokumen HTML
@@ -235,19 +236,20 @@ app.get("/api/cekapikey", async (req, res) => {
     });
 });
 
-app.get("/api/myapikey", (req, res) => {
-    const userId = req.query.userId;
+app.get("/myapikey", async (req, res) => {
+    let userId = req.cookies.userId;
 
     if (!userId) {
-        return res.status(400).json({
-            message: "userId diperlukan",
-        });
+        // Buat userId unik berdasarkan waktu
+        userId = "user_" + Date.now();
+        res.cookie("userId", userId, { maxAge: 1000 * 60 * 60 * 24 * 365 }); // Cookie berlaku 1 tahun
     }
 
-    const apikey = getUserApiKey(userId);
+    const apikey = await addUser(userId);
 
     res.json({
-        apikey: apikey ? apikey : "User belum memiliki API key",
+        userId,
+        apikey
     });
 });
 
