@@ -156,6 +156,59 @@ app.get("/api/downloader/spotifys", async (req, res) => {
     }
 });
 
+app.get('/api/downloader/mediafire', async (req, res) => {
+    const url = req.query.url;
+
+    // Validasi apakah URL ada
+    if (!url) {
+        return res.status(400).json({
+            status: false,
+            message: "Masukkan URL MediaFire yang valid! Contoh: /api/downloader/mediafire?url=https://www.mediafire.com/file/qyk2na28cidzt3p/cf2.js/file"
+        });
+    }
+
+    // Validasi format URL MediaFire
+    const mediafireRegex = /^(https?:\/\/)?(www\.)?mediafire\.com\/.+$/i;
+    if (!mediafireRegex.test(url)) {
+        return res.status(400).json({
+            status: false,
+            message: "URL tidak valid! Pastikan itu adalah URL dari MediaFire."
+        });
+    }
+
+    try {
+        // Menggunakan API pihak ketiga untuk mendapatkan informasi file
+        const response = await axios.post('http://kinchan.sytes.net/mediafire/download', { url });
+        const result = response.data;
+
+        // Jika terjadi kesalahan dalam pengambilan data
+        if (result.error) {
+            return res.status(500).json({
+                status: false,
+                message: result.error
+            });
+        }
+
+        res.json({
+            status: true,
+            creator: `${creator}`,
+            results: {
+                filename: result.filename,
+                size: result.size,
+                mimetype: result.mimetype,
+                downloadUrl: result.download
+            }
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            message: "Terjadi kesalahan saat memproses permintaan.",
+            error: error.message
+        });
+    }
+});
+
 app.use((req, res, next) => {
   res.status(404).send("Halaman tidak ditemukan");
 });
