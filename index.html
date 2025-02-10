@@ -229,33 +229,63 @@
     </footer>
 
     <script>
-        function toggleSidebar() {
-            document.getElementById("sidebar").classList.toggle("active");
-        }
+    function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("active");
+    }
 
-        function toggleSubmenu(id) {
-            const submenu = document.getElementById(id);
-            const btn = submenu.previousElementSibling;
-            submenu.style.maxHeight = submenu.style.maxHeight ? null : submenu.scrollHeight + "px";
-            btn.classList.toggle("active");
-            btn.querySelector("span").textContent = submenu.style.maxHeight ? "▼" : "▶";
-        }
+    function toggleSubmenu(id) {
+        const submenu = document.getElementById(id);
+        const btn = submenu.previousElementSibling;
+        submenu.style.maxHeight = submenu.style.maxHeight ? null : submenu.scrollHeight + "px";
+        btn.classList.toggle("active");
+        btn.querySelector("span").textContent = submenu.style.maxHeight ? "▼" : "▶";
+    }
 
-        async function getIPAddress() {
+    async function getIPAddress() {
+        try {
             let response = await fetch('https://api64.ipify.org?format=json');
             let data = await response.json();
             document.getElementById("ipAddress").textContent = data.ip;
+        } catch (error) {
+            document.getElementById("ipAddress").textContent = "Gagal mendapatkan IP";
+        }
+    }
+
+    function getJakartaTime() {
+        document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
+    }
+
+    async function getBatteryStatus() {
+        if (!navigator.getBattery) {
+            document.getElementById("batteryPercentage").textContent = "Tidak didukung di browser ini";
+            document.getElementById("batteryLevelIndicator").style.width = "0%";
+            document.getElementById("batteryLevelIndicator").style.backgroundColor = "gray";
+            return;
         }
 
-        function getJakartaTime() {
-            document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
-        }
+        try {
+            let battery = await navigator.getBattery();
 
-        window.onload = function () {
-            getIPAddress();
-            getJakartaTime();
-            setInterval(getJakartaTime, 1000);
-        };
+            function updateBatteryInfo() {
+                let level = Math.round(battery.level * 100);
+                document.getElementById("batteryPercentage").textContent = level + "%";
+                document.getElementById("batteryLevelIndicator").style.width = level + "%";
+                document.getElementById("batteryLevelIndicator").style.backgroundColor = level < 20 ? "red" : "green";
+            }
+
+            updateBatteryInfo();
+            battery.addEventListener("levelchange", updateBatteryInfo);
+        } catch (error) {
+            document.getElementById("batteryPercentage").textContent = "Error mendapatkan status baterai";
+        }
+    }
+
+    window.onload = function () {
+        getIPAddress();
+        getJakartaTime();
+        getBatteryStatus();
+        setInterval(getJakartaTime, 1000); // Update jam setiap detik
+    };
     </script>
 
 </body>
