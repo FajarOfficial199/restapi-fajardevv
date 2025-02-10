@@ -8,7 +8,7 @@ const fajar = require('./function/index')
 const { default: makeWaSocket, useMultiFileAuthState, fetchLatestBaileysVersion } = require('@whiskeysockets/baileys');
 const pino = require('pino');
 const { setTimeout: sleep } = require('timers/promises');
-const { users, addUser, checkApiKey } = require("./apikey/myapikey");
+const { users, addUser, getUserApiKey, checkApiKey } = require("./apikey/myapikey");
 
 //seettingsjs
 const allowedIP = global.allowedIP
@@ -232,6 +232,22 @@ app.get("/cekapikey", (req, res) => {
     res.json({
         apikey: apikey,
         status: isValid ? "Aktif" : "Apikey Tidak Ada",
+    });
+});
+
+app.get("/myapikey", (req, res) => {
+    const userId = req.query.userId;
+
+    if (!userId) {
+        return res.status(400).json({
+            message: "userId diperlukan",
+        });
+    }
+
+    const apikey = getUserApiKey(userId);
+
+    res.json({
+        apikey: apikey ? apikey : "User belum memiliki API key",
     });
 });
 
