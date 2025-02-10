@@ -168,12 +168,12 @@ app.get("/api/game/robloxstalk", async (req, res) => {
     }
 
     try {
-        const userData = await ptz.getUserByUsername(username);
+        const userData = await fajar.getUserByUsername(username);
         if (!userData || !userData.id) {
             return res.status(404).json({ status: false, message: "User not found" });
         }
 
-        const results = await ptz.robloxStalk(userData.id);
+        const results = await fajar.robloxStalk(userData.id);
 
         res.json(results);
     } catch (error) {
