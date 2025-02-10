@@ -9,8 +9,7 @@ const fajar = require('./function/index')
 const { default: makeWaSocket, useMultiFileAuthState, fetchLatestBaileysVersion } = require('@whiskeysockets/baileys');
 const pino = require('pino');
 const { setTimeout: sleep } = require('timers/promises');
-
-
+const { getUserByUsername, robloxStalk } = require("./scraper/myfunc");
 
 
 // Middleware
@@ -168,12 +167,12 @@ app.get("/api/game/robloxstalk", async (req, res) => {
     }
 
     try {
-        const userData = await fajar.getUserByUsername(username);
+        const userData = await getUserByUsername(username);
         if (!userData || !userData.id) {
             return res.status(404).json({ status: false, message: "User not found" });
         }
 
-        const results = await fajar.robloxStalk(userData.id);
+        const results = await robloxStalk(userData.id);
 
         res.json(results);
     } catch (error) {
