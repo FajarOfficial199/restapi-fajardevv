@@ -14,8 +14,9 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            padding-top: 60px;
         }
 
         /* Header */
@@ -32,6 +33,9 @@
             left: 0;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hamburger {
@@ -41,109 +45,106 @@
             cursor: pointer;
         }
 
-         /* Sidebar */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: -280px;
-    width: 260px;
-    height: 100%;
-    background: linear-gradient(135deg, #1E3A8A, #9333EA);
-    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    transition: left 0.4s ease-in-out;
-    z-index: 2000;
-    color: white;
-    display: flex;
-    flex-direction: column;
-}
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 260px;
+            height: 100%;
+            background: linear-gradient(135deg, #1E3A8A, #9333EA);
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            transition: left 0.4s ease-in-out;
+            z-index: 2000;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
 
-.sidebar.active {
-    left: 0;
-}
+        .sidebar.active {
+            left: 0;
+        }
 
-/* Sidebar Title */
-.sidebar-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.sidebar-title i {
-    margin-right: 8px;
-    font-size: 22px;
-    color: #FFD700; /* Warna emas */
-}
+        .sidebar-title i {
+            margin-right: 8px;
+            font-size: 22px;
+            color: #FFD700;
+        }
 
-/* Menu */
-.menu {
-    list-style: none;
-    padding: 0;
-}
+        /* Menu */
+        .menu {
+            list-style: none;
+            padding: 0;
+        }
 
-.menu li {
-    margin-bottom: 10px;
-}
+        .menu li {
+            margin-bottom: 10px;
+        }
 
-.menu a, .dropdown-btn {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    padding: 12px;
-    border-radius: 8px;
-    transition: background 0.3s ease-in-out;
-    background: rgba(255, 255, 255, 0.1);
-}
+        .menu a, .dropdown-btn {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            transition: background 0.3s ease-in-out;
+            background: rgba(255, 255, 255, 0.1);
+        }
 
-.menu a:hover, .dropdown-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.05);
-}
+        .menu a:hover, .dropdown-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
 
-/* Ikon Menu */
-.menu i {
-    margin-right: 12px;
-    font-size: 18px;
-}
+        .menu i {
+            margin-right: 12px;
+            font-size: 18px;
+        }
 
-/* Dropdown */
-.submenu {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-in-out;
-    padding-left: 20px;
-}
+        /* Dropdown */
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+            padding-left: 20px;
+        }
 
-.dropdown-btn {
-    justify-content: space-between;
-    cursor: pointer;
-    border: none;
-    background: none;
-    width: 100%;
-    text-align: left;
-    font-size: 16px;
-    padding: 12px;
-    color: white;
-}
+        .dropdown-btn {
+            justify-content: space-between;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-size: 16px;
+            padding: 12px;
+            color: white;
+        }
 
-.dropdown-btn span.arrow {
-    transition: transform 0.3s ease-in-out;
-}
+        .dropdown-btn span.arrow {
+            transition: transform 0.3s ease-in-out;
+        }
 
-.dropdown-btn.active span.arrow {
-    transform: rotate(90deg);
-}
+        .dropdown-btn.active span.arrow {
+            transform: rotate(90deg);
+        }
 
         /* Main Content */
         .container {
-            margin-top: 80px;
             width: 100%;
             max-width: 600px;
             display: flex;
@@ -209,21 +210,21 @@
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-    <button class="close-btn" onclick="toggleSidebar()">✖</button>
-    <h2 class="sidebar-title"><i class="fas fa-thumbtack"></i> FEATURES</h2>
-    <ul class="menu">
-        <li><a href="#"><i class="fas fa-download"></i> Downloader & Media</a></li>
-        <li><a href="#"><i class="fas fa-search"></i> Search Browsing</a></li>
-        <li><a href="#"><i class="fas fa-gamepad"></i> Game</a></li>
-        <li>
-            <button class="dropdown-btn" onclick="toggleSubmenu('islamic')">
-                <i class="fas fa-moon"></i> Islamic <span class="arrow">▶</span>
-            </button>
-            <ul class="submenu" id="islamic">
-                <li><a href="/api/quran" target="_blank"><i class="fas fa-book-open"></i> Quran API</a></li>
-            </ul>
-        </li>
-    </ul>
+        <button class="close-btn" onclick="toggleSidebar()">✖</button>
+        <h2 class="sidebar-title"><i class="fas fa-thumbtack"></i> FEATURES</h2>
+        <ul class="menu">
+            <li><a href="#"><i class="fas fa-download"></i> Downloader & Media</a></li>
+            <li><a href="#"><i class="fas fa-search"></i> Search Browsing</a></li>
+            <li><a href="#"><i class="fas fa-gamepad"></i> Game</a></li>
+            <li>
+                <button class="dropdown-btn" onclick="toggleSubmenu('islamic')">
+                    <i class="fas fa-moon"></i> Islamic <span class="arrow">▶</span>
+                </button>
+                <ul class="submenu" id="islamic">
+                    <li><a href="/api/quran"><i class="fas fa-book-open"></i> Quran API</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
 
     <!-- Konten Utama -->
@@ -237,14 +238,6 @@
             <h2>IP Address</h2>
             <p id="ipAddress">Loading...</p>
         </div>
-
-        <div class="card">
-            <h2>Battery Status</h2>
-            <div class="battery-bar">
-                <div id="batteryLevelIndicator" class="battery-fill"></div>
-            </div>
-            <span id="batteryPercentage">0%</span>
-        </div>
     </main>
 
     <!-- Footer -->
@@ -254,22 +247,18 @@
 
     <script>
         function toggleSidebar() {
-    document.getElementById("sidebar").classList.toggle("active");
-}
+            document.getElementById("sidebar").classList.toggle("active");
+        }
 
-function toggleSubmenu(id) {
-    const submenu = document.getElementById(id);
-    submenu.style.maxHeight = submenu.style.maxHeight ? null : submenu.scrollHeight + "px";
-}
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(id);
+            submenu.style.maxHeight = submenu.style.maxHeight ? null : submenu.scrollHeight + "px";
+        }
 
         async function getIPAddress() {
-            try {
-                let response = await fetch('https://api64.ipify.org?format=json');
-                let data = await response.json();
-                document.getElementById("ipAddress").textContent = data.ip;
-            } catch {
-                document.getElementById("ipAddress").textContent = "Gagal mendapatkan IP";
-            }
+            let response = await fetch('https://api64.ipify.org?format=json');
+            let data = await response.json();
+            document.getElementById("ipAddress").textContent = data.ip;
         }
 
         function getJakartaTime() {
