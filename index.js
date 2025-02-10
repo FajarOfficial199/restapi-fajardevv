@@ -9,6 +9,8 @@ const { default: makeWaSocket, useMultiFileAuthState, fetchLatestBaileysVersion 
 const pino = require('pino');
 const { setTimeout: sleep } = require('timers/promises');
 
+const creator = global.creator
+
 
 // Middleware
 var app = express();
