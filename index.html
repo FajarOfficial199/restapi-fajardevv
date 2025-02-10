@@ -166,6 +166,10 @@
     </footer>
 
     <script>
+        function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("active");
+        }
+        
         function getJakartaTime() {
             document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
         }
