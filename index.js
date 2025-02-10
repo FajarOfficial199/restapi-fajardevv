@@ -9,7 +9,7 @@ const fajar = require('./function/index')
 const { default: makeWaSocket, useMultiFileAuthState, fetchLatestBaileysVersion } = require('@whiskeysockets/baileys');
 const pino = require('pino');
 const { setTimeout: sleep } = require('timers/promises');
-const { getUserByUsername, robloxStalk } = require("./scraper/myfunc");
+const { getUserByUsername, robloxStalk } = require("./function/scraper/myfunc");
 
 
 // Middleware
