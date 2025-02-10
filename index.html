@@ -110,6 +110,9 @@
                         </a>
                     </li>
                 </ul>
+                <div class="mt-4">
+                    <p class="text-gray-700 font-medium">Total Requests: <span id="totalRequests">0</span></p>
+                </div>
             </div>
         </section>
     </main>
@@ -142,6 +145,7 @@
             const url = element.href;
             if (url.includes('?url=')) {
                 totalRequests++;
+                document.getElementById('totalRequests').innerText = totalRequests;
                 console.log('Total Requests:', totalRequests);
             }
         }
