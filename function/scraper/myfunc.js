@@ -1,4 +1,4 @@
-var creator = "Fajar Official"
+const creator = "Fajar Official"
 const cloudscraper = require("cloudscraper");
 
 async function fetchData(url) {
