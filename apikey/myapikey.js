@@ -15,8 +15,9 @@ async function addUser(userId) {
     return newApiKey;
 }
 
-function checkApiKey(apikey) {
-    return [...users.values()].includes(apikey);
+// Fungsi untuk mendapatkan API key berdasarkan userId
+function getUserApiKey(userId) {
+    return users.get(userId) || null;
 }
 
-module.exports = { users, generateApiKey, addUser, checkApiKey };
+module.exports = { users, generateApiKey, addUser, getUserApiKey };
