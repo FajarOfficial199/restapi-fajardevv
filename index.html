@@ -20,11 +20,15 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
             color: black;
+            position: relative;
+        }
+        .search-box {
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
         input {
-            width: 80%;
-            padding: 10px;
-            margin-top: 10px;
+            padding: 8px;
             border-radius: 5px;
             border: 1px solid #ccc;
         }
@@ -57,44 +61,26 @@
 </head>
 <body>
     <div class="container">
+        <!-- Fitur Search di Pojok Kanan Atas -->
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Cari..." onkeyup="searchEndpoints()">
+        </div>
+
         <h1>Fajar API Downloader</h1>
         <p>API terbaik untuk kebutuhan downloader kamu!</p>
 
-        <input type="text" id="url-input" placeholder="Masukkan URL video...">
-        <button class="button" onclick="updateLinks()">Set URL</button>
-
         <h2>Download Endpoints</h2>
-        
-        <!-- Fitur Search -->
-        <input type="text" id="search-input" placeholder="Cari downloader..." onkeyup="searchEndpoints()">
 
         <div id="endpoints">
-            <a id="tiktok-btn" href="/api/downloader/tiktok?url=" class="button" target="_blank">Download TikTok</a>
-            <a id="ytmp3-btn" href="/api/downloader/ytmp3?url=" class="button" target="_blank">Download YTMP3</a>
-            <a id="spotify-btn" href="/api/downloader/spotify?url=" class="button" target="_blank">Download Spotify</a>
+            <a href="/api/downloader/tiktok?url=" class="button" target="_blank">Download TikTok</a>
+            <a href="/api/downloader/ytmp3?url=" class="button" target="_blank">Download YTMP3</a>
+            <a href="/api/downloader/spotify?url=" class="button" target="_blank">Download Spotify</a>
         </div>
 
         <p id="total-requests">Total Requests (Local): <span id="request-count">0</span></p>
     </div>
 
     <script>
-        function updateLinks() {
-            let url = document.getElementById("url-input").value.trim();
-
-            if (url) {
-                document.getElementById("tiktok-btn").href = `/api/downloader/tiktok?url=${encodeURIComponent(url)}`;
-                document.getElementById("ytmp3-btn").href = `/api/downloader/ytmp3?url=${encodeURIComponent(url)}`;
-                document.getElementById("spotify-btn").href = `/api/downloader/spotify?url=${encodeURIComponent(url)}`;
-
-                // Update total request hanya jika ada URL
-                let totalRequests = localStorage.getItem("totalRequests") || 0;
-                totalRequests = parseInt(totalRequests) + 1;
-                localStorage.setItem("totalRequests", totalRequests);
-
-                document.getElementById("request-count").innerText = totalRequests;
-            }
-        }
-
         function updateRequestCount() {
             let totalRequests = localStorage.getItem("totalRequests") || 0;
             document.getElementById("request-count").innerText = totalRequests;
@@ -113,7 +99,6 @@
             });
         }
 
-        // Update tampilan total request saat halaman dimuat
         window.onload = function () {
             updateRequestCount();
         };
