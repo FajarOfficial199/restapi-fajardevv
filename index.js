@@ -185,18 +185,14 @@ res.status(500).send("Internal Server Error");
 });
 
 app.use((req, res, next) => {
-  res.status(404).send("Sorry can't find that!");
+  res.status(404).send("Halaman tidak ditemukan");
 });
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send("Something broke!");
+  res.status(500).send('Ada kesalahan pada server');
 });
 
-// Jalankan server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server berjalan di http://localhost:${port}`);
 });
-
-
-
