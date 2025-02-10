@@ -34,94 +34,83 @@
         }
 
         /* Sidebar */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -280px;
-            width: 260px;
-            height: 100%;
-            background: linear-gradient(135deg, #1E3A8A, #9333EA);
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            transition: left 0.5s ease-in-out;
-            z-index: 20;
-            color: white;
-        }
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 260px;
+    height: 100%;
+    background: linear-gradient(135deg, #1E3A8A, #9333EA);
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    transition: left 0.5s ease-in-out;
+    z-index: 20;
+    color: white;
+}
 
-        .sidebar.active {
-            left: 0;
-        }
+.sidebar.active {
+    left: 0;
+}
 
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
+.sidebar-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+}
 
-        .hamburger {
-            font-size: 28px;
-            cursor: pointer;
-            color: white;
-            position: absolute;
-            left: 20px;
-            top: 10px;
-        }
+/* Menu */
+.menu {
+    list-style: none;
+    padding: 0;
+}
 
-        /* Menu */
-        .menu li {
-            list-style: none;
-            margin: 10px 0;
-        }
+.menu li {
+    margin-bottom: 10px;
+}
 
-        .menu a {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            text-decoration: none;
-            color: white;
-            font-size: 16px;
-            padding: 12px;
-            border-radius: 5px;
-            transition: background 0.3s ease-in-out;
-        }
+.menu a, .dropdown-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out;
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+}
 
-        .menu a:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
+.menu a i, .dropdown-btn i {
+    margin-right: 10px;
+}
 
-        /* Dropdown */
-        .submenu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-in-out;
-        }
+.menu a:hover, .dropdown-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
 
-        .dropdown-btn {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            color: white;
-            font-size: 16px;
-            padding: 12px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            text-align: left;
-        }
+/* Dropdown */
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    padding-left: 20px;
+}
 
-        .dropdown-btn span {
-            transition: transform 0.3s ease-in-out;
-        }
+.dropdown-btn span.arrow {
+    transition: transform 0.3s ease-in-out;
+}
 
-        .dropdown-btn.active span {
-            transform: rotate(90deg);
-        }
+.dropdown-btn.active span.arrow {
+    transform: rotate(90deg);
+}
 
         /* Card */
         .card {
@@ -182,25 +171,47 @@
     </header>
 
     <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <button class="close-btn" onclick="toggleSidebar()">✖</button>
-        <h2 class="text-white text-lg font-bold mb-4">FEATURES</h2>
-        <ul class="menu">
-            <li><a href="#">⬇ Downloader & Media</a></li>
-            <li><a href="#">🔍 Search Browsing</a></li>
-            <li><a href="#">💻 Game</a></li>
-            <li>
-                <button class="dropdown-btn" onclick="toggleSubmenu('islamic')">
-                    🌙 Islamic <span>▶</span>
-                </button>
-                <ul class="submenu" id="islamic">
-                    <li><a href="/api/fitur?query=" target="_blank">Tambahin...</a></li>
-                    <li><a href="/api/quran" target="_blank">Quran API</a></li>
-                </ul>
-            </li>
-            <li><a href="#">🤖 Artificial Intelligence</a></li>
-        </ul>
-    </div>
+<div class="sidebar" id="sidebar">
+    <button class="close-btn" onclick="toggleSidebar()">✖</button>
+    <h2 class="sidebar-title">📌 FEATURES</h2>
+    <ul class="menu">
+        <li>
+            <a href="#">
+                <i class="fas fa-download"></i>
+                <span>Downloader & Media</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fas fa-search"></i>
+                <span>Search Browsing</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fas fa-gamepad"></i>
+                <span>Game</span>
+            </a>
+        </li>
+        <li>
+            <button class="dropdown-btn" onclick="toggleSubmenu('islamic')">
+                <i class="fas fa-moon"></i>
+                <span>Islamic</span>
+                <span class="arrow">▶</span>
+            </button>
+            <ul class="submenu" id="islamic">
+                <li><a href="/api/fitur?query=" target="_blank">Tambahin...</a></li>
+                <li><a href="/api/quran" target="_blank">Quran API</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fas fa-robot"></i>
+                <span>Artificial Intelligence</span>
+            </a>
+        </li>
+    </ul>
+</div>
 
     <!-- Konten Utama -->
     <main class="container flex flex-col items-center p-6">
