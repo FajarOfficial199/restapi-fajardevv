@@ -241,16 +241,15 @@
 
     <script>
     function toggleSidebar() {
-        document.getElementById("sidebar").classList.toggle("active");
-    }
+    document.getElementById("sidebar").classList.toggle("active");
+}
 
-    function toggleSubmenu(id) {
-        const submenu = document.getElementById(id);
-        const btn = submenu.previousElementSibling;
-        submenu.style.maxHeight = submenu.style.maxHeight ? null : submenu.scrollHeight + "px";
-        btn.classList.toggle("active");
-        btn.querySelector("span").textContent = submenu.style.maxHeight ? "▼" : "▶";
-    }
+function toggleSubmenu(id) {
+    const submenu = document.getElementById(id);
+    const btn = submenu.previousElementSibling;
+    submenu.style.maxHeight = submenu.style.maxHeight ? null : submenu.scrollHeight + "px";
+    btn.classList.toggle("active");
+}
 
     async function getIPAddress() {
         try {
