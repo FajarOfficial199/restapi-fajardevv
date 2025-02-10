@@ -1,3 +1,4 @@
+require('./settings')
 var express = require("express"), cors = require("cors"), secure = require("ssl-express-www");
 const path = require("path");
 const fs = require("fs");
