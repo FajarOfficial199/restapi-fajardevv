@@ -1,4 +1,4 @@
 module.exports = {
-  robloxStalk: require('./function/robloxStalk'),
-  getUserByUsername: require('./function/robloxStalk')
+  robloxStalk: require('./function/myfunc'),
+  getUserByUsername: require('./function/myfunc')
 }
