@@ -31,7 +31,7 @@
             transform: scale(1.05);
             transition: transform 0.3s ease-in-out;
         }
-        
+
         /* Kotak total request */
         .total-requests-box {
             background: #cce5ff;
@@ -70,48 +70,17 @@
             </div>
         </div>
 
-        <!-- Intro Section -->
-        <div class="bg-blue-100 p-6 rounded shadow-lg slide-down">
-            Create By Fajar
-            <p class="text-lg text-center text-blue-900 font-medium"></p>
-        </div>
-
         <section class="mt-8">
             <h2 class="text-2xl font-semibold text-blue-700 mb-4 slide-down">Download Endpoints</h2>
             <div class="bg-white p-6 rounded shadow-lg slide-down">
                 <ul id="endpointList">
-                    <!-- Endpoint Items -->
                     <li class="flex justify-between items-center py-3 border-b hover-effect" data-name="tiktok download">
                         <span class="text-blue-600 font-semibold">GET</span>
-                        <span class="text-gray-700">Tik Tok Download</span>
-                        <a href="/api/downloader/tiktok?url=https://vt.tiktok.com/ZSjnf5voB/" target="_blank"
-                            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition" onclick="incrementRequestCount(this)">
+                        <span class="text-gray-700">TikTok Download</span>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition"
+                            onclick="fetchAndCheckRequest('https://restapi-fajardevv.vercel.app/api/downloader/tiktok?url=https://vt.tiktok.com/ZSjnf5voB/')">
                             Try
-                        </a>
-                    </li>
-                    <li class="flex justify-between items-center py-3 border-b hover-effect" data-name="ytmp3 download">
-                        <span class="text-blue-600 font-semibold">GET</span>
-                        <span class="text-gray-700">YTMP3 Download</span>
-                        <a href="/api/downloader/ytmp3?url=https://youtu.be/AURkGj0jEx4?si=f0USJg7M4c39r1t2" target="_blank"
-                            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition" onclick="incrementRequestCount(this)">
-                            Try
-                        </a>
-                    </li>
-                    <li class="flex justify-between items-center py-3 border-b hover-effect" data-name="ytmp4 download">
-                        <span class="text-blue-600 font-semibold">GET</span>
-                        <span class="text-gray-700">YTMP4 Download</span>
-                        <a href="/api/downloader/ytmp4?url=https://youtu.be/AURkGj0jEx4?si=f0USJg7M4c39r1t2" target="_blank"
-                            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition" onclick="incrementRequestCount(this)">
-                            Try
-                        </a>
-                    </li>
-                    <li class="flex justify-between items-center py-3 border-b hover-effect" data-name="spotify search">
-                        <span class="text-blue-600 font-semibold">GET</span>
-                        <span class="text-gray-700">Spotify Search</span>
-                        <a href="/api/downloader/spotifys?judul=hujan" target="_blank"
-                            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition" onclick="incrementRequestCount(this)">
-                            Try
-                        </a>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -144,13 +113,22 @@
         let totalRequests = localStorage.getItem('totalRequests') ? parseInt(localStorage.getItem('totalRequests')) : 0;
         document.getElementById('totalRequests').innerText = totalRequests;
 
-        function incrementRequestCount(element) {
-            const url = element.href;
-            if (url.includes('?url=')) {
-                totalRequests++;
-                document.getElementById('totalRequests').innerText = totalRequests;
-                localStorage.setItem('totalRequests', totalRequests); // Simpan ke localStorage
-                console.log('Total Requests:', totalRequests);
+        async function fetchAndCheckRequest(apiUrl) {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.result) {
+                    // Jika API response mengandung "result", total request bertambah
+                    totalRequests++;
+                    document.getElementById('totalRequests').innerText = totalRequests;
+                    localStorage.setItem('totalRequests', totalRequests);
+                    console.log('✅ Request berhasil, total bertambah:', totalRequests);
+                } else {
+                    console.log('❌ Request error, total request tidak bertambah.');
+                }
+            } catch (error) {
+                console.log('⚠️ Error saat fetch API:', error);
             }
         }
 
@@ -162,9 +140,8 @@
             document.getElementById('clock').innerText = timeString;
         }
 
-        // Update jam setiap detik
         setInterval(updateClock, 1000);
-        updateClock(); // Panggil sekali agar langsung muncul
+        updateClock();
     </script>
 </body>
 
