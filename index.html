@@ -173,14 +173,29 @@
     </header>
 
     <!-- Sidebar -->
+    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <button class="close-btn" onclick="toggleSidebar()">✖</button>
-        <h2 class="sidebar-title"><i class="fas fa-thumbtack"></i> FEATURES</h2>
+        <h2 class="sidebar-title">FEATURES</h2>
         <ul class="menu">
-            <li><a href="#"><span><i class="fas fa-download"></i> Downloader & Media</span> <i class="fas fa-chevron-right"></i></a></li>
-            <li><a href="#"><span><i class="fas fa-search"></i> Search Browsing</span> <i class="fas fa-chevron-right"></i></a></li>
-            <li><a href="#"><span><i class="fas fa-gamepad"></i> Game</span> <i class="fas fa-chevron-right"></i></a></li>
-            <li><a href="#"><span><i class="fas fa-moon"></i> Islamic</span> <i class="fas fa-chevron-right"></i></a></li>
+            <li>
+                <a href="#"><i class="fas fa-download"></i> Downloader & Media <span class="arrow">▶</span></a>
+            </li>
+            <li>
+                <a href="#"><i class="fas fa-search"></i> Search Browsing <span class="arrow">▶</span></a>
+            </li>
+            <li>
+                <a href="#"><i class="fas fa-gamepad"></i> Game <span class="arrow">▶</span></a>
+            </li>
+            <li>
+                <button onclick="toggleSubmenu('islamic')">
+                    <i class="fas fa-moon"></i> Islamic <span class="arrow">▶</span>
+                </button>
+                <ul class="submenu" id="islamic">
+                    <li><a href="/api/quran"><i class="fas fa-book-open"></i> Quran API</a></li>
+                    <li><a href="/api/prayer"><i class="fas fa-pray"></i> Prayer Time API</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
 
@@ -213,6 +228,19 @@
     <script>
         function toggleSidebar() {
             document.getElementById("sidebar").classList.toggle("active");
+        }
+
+        function toggleSubmenu(id) {
+            let submenu = document.getElementById(id);
+            let parent = submenu.parentElement;
+
+            if (submenu.style.display === "block") {
+                submenu.style.display = "none";
+                parent.classList.remove("active");
+            } else {
+                submenu.style.display = "block";
+                parent.classList.add("active");
+            }
         }
 
         async function getIPAddress() {
