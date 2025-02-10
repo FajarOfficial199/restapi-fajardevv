@@ -1,5 +1,4 @@
-require('../../settings')
-var creator = require('../../settings')
+var creator = "Fajar Official"
 const cloudscraper = require("cloudscraper");
 
 async function fetchData(url) {
