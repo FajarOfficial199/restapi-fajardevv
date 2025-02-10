@@ -9,7 +9,6 @@ const fajar = require('./function/index')
 const { default: makeWaSocket, useMultiFileAuthState, fetchLatestBaileysVersion } = require('@whiskeysockets/baileys');
 const pino = require('pino');
 const { setTimeout: sleep } = require('timers/promises');
-const { getUserByUsername, robloxStalk } = require("./function/scraper/myfunc");
 
 
 // Middleware
@@ -156,27 +155,6 @@ app.get("/api/downloader/spotifys", async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Terjadi kesalahan pada server." });
-    }
-});
-
-app.get("/api/game/robloxstalk", async (req, res) => {
-    const username = req.query.username;
-
-    if (!username) {
-        return res.status(400).json({ status: false, message: "Username is required" });
-    }
-
-    try {
-        const userData = await getUserByUsername(username);
-        if (!userData || !userData.id) {
-            return res.status(404).json({ status: false, message: "User not found" });
-        }
-
-        const results = await robloxStalk(userData.id);
-
-        res.json(results);
-    } catch (error) {
-        res.status(500).json({ status: false, message: error.message });
     }
 });
 
