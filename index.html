@@ -31,23 +31,54 @@
             transform: scale(1.05);
             transition: transform 0.3s ease-in-out;
         }
-        
-        .battery-status {
+
+        /* Kotak Informasi */
+        .info-box {
+            background: #ffffff;
+            border: 2px solid #007bff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            color: #0056b3;
+        }
+
+        .battery-box {
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-
-        /* Kotak total request */
-        .total-requests-box {
-            background: #cce5ff;
+            background: #ffffff;
             border: 2px solid #007bff;
-            padding: 10px;
+            padding: 8px 12px;
             border-radius: 8px;
-            text-align: center;
             font-weight: bold;
             color: #0056b3;
-            margin-top: 10px;
+        }
+
+        .battery-icon {
+            width: 24px;
+            height: 12px;
+            border: 2px solid #333;
+            border-radius: 3px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .battery-icon::after {
+            content: '';
+            position: absolute;
+            right: -4px;
+            width: 4px;
+            height: 6px;
+            background: #333;
+            border-radius: 2px;
+        }
+
+        .battery-level {
+            height: 100%;
+            background: green;
+            transition: width 0.3s;
         }
     </style>
 </head>
@@ -57,16 +88,20 @@
     <header class="bg-blue-600 text-white shadow p-4 gradient-bg slide-down">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-3xl font-bold">Fajar API</h1>
-            <div class="flex items-center">
-                <!-- Tampilkan alamat IP -->
-                <span id="ipAddress" class="text-sm font-medium mr-4"></span>
+            <div class="flex items-center gap-4">
+                <!-- Kotak Alamat IP -->
+                <div id="ipAddress" class="info-box text-sm">IP: Loading...</div>
 
-                <!-- Tampilkan jam & status baterai -->
-                <div class="battery-status">
-                    <span id="clock" class="text-lg font-semibold mr-2"></span>
-                    <span id="batteryIcon">🔋</span>
-                    <span id="batteryLevel"></span>
+                <!-- Kotak Baterai -->
+                <div class="battery-box">
+                    <div class="battery-icon">
+                        <div id="batteryLevelIndicator" class="battery-level"></div>
+                    </div>
+                    <span id="batteryPercentage">0%</span>
                 </div>
+
+                <!-- Jam -->
+                <span id="clock" class="text-lg font-semibold"></span>
 
                 <button class="text-white text-lg ml-4">🗿</button>
             </div>
@@ -80,7 +115,7 @@
             <input id="searchInput" type="text" placeholder="Search..." class="w-full p-2 border rounded" oninput="searchEndpoints()">
             
             <!-- Kotak Total Requests -->
-            <div class="total-requests-box">
+            <div class="info-box">
                 Total Requests: <span id="totalRequests">0</span>
             </div>
         </div>
@@ -130,21 +165,7 @@
             });
         }
 
-        // Ambil total request dari localStorage atau set ke 0 jika belum ada
-        let totalRequests = localStorage.getItem('totalRequests') ? parseInt(localStorage.getItem('totalRequests')) : 0;
-        document.getElementById('totalRequests').innerText = totalRequests;
-
-        function incrementRequestCount(element) {
-            const url = element.href;
-            if (url.includes('?url=')) {
-                totalRequests++;
-                document.getElementById('totalRequests').innerText = totalRequests;
-                localStorage.setItem('totalRequests', totalRequests);
-                console.log('Total Requests:', totalRequests);
-            }
-        }
-
-        // Fungsi untuk menampilkan jam WIB (Jakarta)
+        // Update Jam
         function updateClock() {
             const now = new Date();
             const options = { timeZone: 'Asia/Jakarta', hour12: false };
@@ -154,7 +175,7 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Fungsi untuk mendapatkan alamat IP pengguna
+        // Ambil Alamat IP
         async function getIpAddress() {
             try {
                 const response = await fetch('https://api64.ipify.org?format=json');
@@ -167,28 +188,26 @@
         }
         getIpAddress();
 
-        // Fungsi untuk mendapatkan status baterai
+        // Ambil Status Baterai
         async function getBatteryStatus() {
             if ('getBattery' in navigator) {
                 const battery = await navigator.getBattery();
                 function updateBatteryInfo() {
-                    document.getElementById('batteryLevel').innerText = `${Math.round(battery.level * 100)}%`;
-                    let batteryIcon = '🔋';
+                    const batteryLevel = Math.round(battery.level * 100);
+                    document.getElementById('batteryPercentage').innerText = `${batteryLevel}%`;
+                    document.getElementById('batteryLevelIndicator').style.width = `${batteryLevel}%`;
 
-                    if (battery.level > 0.8) batteryIcon = '🟢';
-                    else if (battery.level > 0.5) batteryIcon = '🟡';
-                    else if (battery.level > 0.2) batteryIcon = '🟠';
-                    else batteryIcon = '🔴';
+                    let batteryColor = 'green';
+                    if (batteryLevel < 50) batteryColor = 'yellow';
+                    if (batteryLevel < 20) batteryColor = 'red';
 
-                    if (battery.charging) batteryIcon = '⚡';
-
-                    document.getElementById('batteryIcon').innerText = batteryIcon;
+                    document.getElementById('batteryLevelIndicator').style.background = batteryColor;
                 }
                 updateBatteryInfo();
                 battery.addEventListener('levelchange', updateBatteryInfo);
                 battery.addEventListener('chargingchange', updateBatteryInfo);
             } else {
-                document.getElementById('batteryLevel').innerText = "Tidak didukung";
+                document.getElementById('batteryPercentage').innerText = "Tidak didukung";
             }
         }
         getBatteryStatus();
