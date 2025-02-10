@@ -244,6 +244,46 @@
             btn.classList.toggle("active");
             btn.querySelector("span").textContent = submenu.style.maxHeight ? "▼" : "▶";
         }
+
+        async function getIPAddress() {
+        try {
+            let response = await fetch('https://api64.ipify.org?format=json');
+            let data = await response.json();
+            document.getElementById("ipAddress").textContent = data.ip;
+        } catch (error) {
+            document.getElementById("ipAddress").textContent = "Gagal mendapatkan IP";
+        }
+    }
+
+    // Fungsi untuk mendapatkan tanggal dan waktu Jakarta (WIB)
+    function getJakartaTime() {
+        let options = { timeZone: "Asia/Jakarta", hour12: false };
+        let now = new Date().toLocaleString("id-ID", options);
+        document.getElementById("jakartaTime").textContent = now;
+    }
+
+    // Fungsi untuk mendapatkan status baterai
+    function getBatteryStatus() {
+        navigator.getBattery().then(battery => {
+            function updateBatteryInfo() {
+                let level = battery.level * 100;
+                document.getElementById("batteryPercentage").textContent = level + "%";
+                document.getElementById("batteryLevelIndicator").style.width = level + "%";
+                document.getElementById("batteryLevelIndicator").style.backgroundColor = level < 20 ? "red" : "green";
+            }
+
+            updateBatteryInfo();
+            battery.addEventListener("levelchange", updateBatteryInfo);
+        });
+    }
+
+    // Jalankan fungsi saat halaman dimuat
+    window.onload = function () {
+        getIPAddress();
+        getJakartaTime();
+        getBatteryStatus();
+        setInterval(getJakartaTime, 1000); // Update jam setiap detik
+    };
     </script>
 
 </body>
