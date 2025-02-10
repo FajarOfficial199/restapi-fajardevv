@@ -200,8 +200,8 @@
     <!-- Main Content -->
     <main class="container">
         <div class="card">
-            <h2>Jakarta Time (WIB)</h2>
-            <p id="jakartaTime">Loading...</p>
+    <h2>Jakarta Time (WIB)</h2>
+    <p id="jakartaTime">Loading...</p>
         </div>
 
         <div class="card">
@@ -242,8 +242,17 @@
         }
 
         function getJakartaTime() {
-            document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
-        }
+    const timeElement = document.getElementById("jakartaTime");
+    if (timeElement) {
+        timeElement.textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
+    }
+}
+
+// Jalankan saat halaman dimuat dan perbarui setiap detik
+window.onload = function () {
+    getJakartaTime();
+    setInterval(getJakartaTime, 1000);
+};
 
         window.onload = function () {
             getJakartaTime();
