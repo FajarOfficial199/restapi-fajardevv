@@ -9,6 +9,9 @@ const { default: makeWaSocket, useMultiFileAuthState, fetchLatestBaileysVersion 
 const pino = require('pino');
 const { setTimeout: sleep } = require('timers/promises');
 
+//seettingsjs
+const allowedIP = global.allowedIP
+const maintenance = global.maintance
 const creator = global.creator
 
 
@@ -209,6 +212,21 @@ app.get('/api/downloader/mediafire', async (req, res) => {
             message: "Terjadi kesalahan saat memproses permintaan.",
             error: error.message
         });
+    }
+});
+
+app.use((req, res, next) => {
+    if (global.maintenance) {
+        const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+        // Cek apakah IP yang mengakses adalah allowedIP
+        if (clientIP === allowedIP || clientIP === `::ffff:${allowedIP}`) {
+            next(); // Lanjutkan akses
+        } else {
+            return res.status(503).send("SORRY, WEB INI SEDANG PENAMBAHAN FITUR");
+        }
+    } else {
+        next(); // Jika maintenance mode dimatikan, lanjutkan request
     }
 });
 
