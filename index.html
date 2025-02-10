@@ -67,6 +67,47 @@
             left: 0;
         }
 
+        /* Close Button */
+        .close-btn {
+            font-size: 18px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            text-align: right;
+        }
+
+        /* Sidebar Menu */
+        .menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .menu li {
+            margin-bottom: 10px;
+        }
+
+        .menu a, .menu button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            transition: background 0.3s ease-in-out;
+            background: rgba(255, 255, 255, 0.1);
+            width: 100%;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .menu a:hover, .menu button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
         /* Main Content */
         .main-content {
             margin-top: 70px;
