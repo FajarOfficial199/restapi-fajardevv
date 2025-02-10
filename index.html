@@ -140,13 +140,16 @@
             });
         }
 
-        let totalRequests = 0;
+        // Ambil total request dari localStorage atau set ke 0 jika belum ada
+        let totalRequests = localStorage.getItem('totalRequests') ? parseInt(localStorage.getItem('totalRequests')) : 0;
+        document.getElementById('totalRequests').innerText = totalRequests;
 
         function incrementRequestCount(element) {
             const url = element.href;
             if (url.includes('?url=')) {
                 totalRequests++;
                 document.getElementById('totalRequests').innerText = totalRequests;
+                localStorage.setItem('totalRequests', totalRequests); // Simpan ke localStorage
                 console.log('Total Requests:', totalRequests);
             }
         }
