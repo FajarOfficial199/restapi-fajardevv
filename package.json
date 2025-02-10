@@ -21,6 +21,7 @@
     "path": "^0.12.7",
     "pino": "^9.5.0",
     "qrcode": "^1.5.4",
+    "ssl-express-www": "^3.2.1",
     "tiktokdl": "^0.0.5"
   }
 }
