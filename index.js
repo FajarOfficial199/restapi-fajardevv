@@ -8,6 +8,7 @@ const fajar = require('./function/index')
 const { default: makeWaSocket, useMultiFileAuthState, fetchLatestBaileysVersion } = require('@whiskeysockets/baileys');
 const pino = require('pino');
 const { setTimeout: sleep } = require('timers/promises');
+const { users, addUser, checkApiKey } = require("./apikey/myapikey");
 
 //seettingsjs
 const allowedIP = global.allowedIP
@@ -213,6 +214,25 @@ app.get('/api/downloader/mediafire', async (req, res) => {
             error: error.message
         });
     }
+});
+
+app.get("/cekapikey", (req, res) => {
+    const apikey = req.query.apikey;
+
+    if (!apikey) {
+        return res.json({
+            apikey: null,
+            status: "Apikey Tidak Ada",
+        });
+    }
+
+    // Cek apakah API key ada di dalam daftar
+    const isValid = checkApiKey(apikey);
+
+    res.json({
+        apikey: apikey,
+        status: isValid ? "Aktif" : "Apikey Tidak Ada",
+    });
 });
 
 app.use((req, res, next) => {
