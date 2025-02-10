@@ -65,43 +65,37 @@
         <a href="#" class="button" onclick="download('ytmp3')">Download YTMP3</a>
         <a href="#" class="button" onclick="download('spotify')">Download Spotify</a>
 
-        <p id="total-requests">Total Requests: <span id="request-count">0</span></p>
+        <p id="total-requests">Total Requests (Local): <span id="request-count">0</span></p>
     </div>
 
     <script>
         function searchAPI() {
             let query = document.getElementById("search").value.toLowerCase();
-            alert("Fitur pencarian belum tersedia!"); // Bisa diubah nanti ke fungsi pencarian API
+            alert("Fitur pencarian belum tersedia!"); // Bisa dikembangkan nanti
         }
 
         function download(type) {
-            let url;
-            if (type === "tiktok") {
-                url = prompt("Masukkan URL TikTok:");
-            } else if (type === "ytmp3") {
-                url = prompt("Masukkan URL YouTube:");
-            } else if (type === "spotify") {
-                url = prompt("Masukkan URL Spotify:");
-            }
+            let url = prompt("Masukkan URL untuk di-download:");
 
             if (url) {
-                fetch(`https://restapi-fajardevv.vercel.app/api/downloader/${type}?url=${encodeURIComponent(url)}`)
-                .then(response => response.json())
-                .then(data => {
-                    alert("Download berhasil! Cek console untuk detail.");
-                    console.log(data);
-                    updateRequestCount();
-                })
-                .catch(error => console.error("Error:", error));
+                let apiUrl = `https://restapi-fajardevv.vercel.app/api/downloader/${type}?url=${encodeURIComponent(url)}`;
+                
+                // Buka link langsung
+                window.open(apiUrl, "_blank");
+
+                // Update total request di local storage
+                let totalRequests = localStorage.getItem("totalRequests") || 0;
+                totalRequests = parseInt(totalRequests) + 1;
+                localStorage.setItem("totalRequests", totalRequests);
+
+                // Perbarui tampilan total request
+                document.getElementById("request-count").innerText = totalRequests;
             }
         }
 
         function updateRequestCount() {
-            fetch("https://restapi-fajardevv.vercel.app/api/total-requests")
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById("request-count").innerText = data.total;
-                });
+            let totalRequests = localStorage.getItem("totalRequests") || 0;
+            document.getElementById("request-count").innerText = totalRequests;
         }
 
         // Update total request saat halaman dimuat
