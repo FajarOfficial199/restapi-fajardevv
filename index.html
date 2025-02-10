@@ -15,7 +15,7 @@
 
         /* Sidebar */
         .sidebar {
-            width: 250px;
+            width: 260px;
             background: #1c1c1c;
             height: 100vh;
             padding: 20px;
@@ -26,22 +26,25 @@
         }
 
         .sidebar h2 {
-            text-align: center;
+            text-align: left;
             color: #ffffff;
+            font-size: 18px;
+            margin-bottom: 20px;
         }
 
         .menu-item {
             display: flex;
             align-items: center;
-            padding: 10px;
+            padding: 12px;
             color: white;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 15px;
             border-radius: 5px;
             transition: background 0.3s;
+            margin-bottom: 5px;
         }
 
-        .menu-item:hover {
+        .menu-item:hover, .menu-item.active {
             background: #333333;
         }
 
@@ -52,7 +55,7 @@
         /* Konten utama */
         .main-content {
             margin-left: 270px;
-            padding: 20px;
+            padding: 30px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -63,43 +66,60 @@
         .container {
             max-width: 600px;
             background: white;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 12px;
             color: black;
             text-align: center;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
             width: 100%;
         }
 
         .button {
             display: block;
             width: 100%;
-            background: #6a11cb;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
             color: white;
-            padding: 10px;
+            padding: 12px;
             margin-top: 10px;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 6px;
             text-decoration: none;
             text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
         }
 
         .button:hover {
-            background: #2575fc;
+            opacity: 0.8;
         }
 
-        /* Total Request di kanan */
+        /* Total Request di kanan atas */
         .total-request {
             position: fixed;
             right: 20px;
             top: 20px;
-            background: #1c1c1c;
+            background: #333;
             padding: 10px 20px;
             border-radius: 10px;
             color: white;
-            font-size: 18px;
-            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+            font-size: 16px;
+            box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsif */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 10px;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -109,7 +129,7 @@
     <div class="sidebar">
         <h2>FEATURES</h2>
         <a href="#" class="menu-item">⬇️ Downloader & Media</a>
-        <a href="#" class="menu-item">🔍 Search Browsing</a>
+        <a href="#" class="menu-item active">🔍 Search Browsing</a>
         <a href="#" class="menu-item">🕹️ Game</a>
         <a href="#" class="menu-item">☪️ Islamic</a>
         <a href="#" class="menu-item">🤖 Artificial Intelligence</a>
