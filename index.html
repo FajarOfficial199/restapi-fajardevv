@@ -17,35 +17,6 @@
             justify-content: space-between;
         }
 
-        /* Header */
-        .header {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(90deg, #1E3A8A, #9333EA);
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            position: fixed;
-            top: 0;
-            left: 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-        }
-
-        .hamburger {
-            font-size: 22px;
-            cursor: pointer;
-            margin-left: 15px;
-        }
-
-        .header-title {
-            text-align: center;
-            flex-grow: 1;
-        }
-
         /* Sidebar */
         .sidebar {
             position: fixed;
@@ -65,16 +36,6 @@
 
         .sidebar.active {
             left: 0;
-        }
-
-        /* Close Button */
-        .close-btn {
-            font-size: 18px;
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            text-align: right;
         }
 
         /* Sidebar Menu */
@@ -126,20 +87,6 @@
             transform: rotate(90deg);
         }
 
-        /* Main Content */
-        .main-content {
-            margin-top: 70px;
-            padding: 15px;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-        }
-
         /* Battery Bar */
         .battery-bar {
             width: 100%;
@@ -155,63 +102,50 @@
             border-radius: 5px;
             transition: width 0.5s ease-in-out;
         }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 15px;
-            background: linear-gradient(90deg, #1E3A8A, #9333EA);
-            color: white;
-            font-size: 14px;
-            width: 100%;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-        }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 flex flex-col justify-between">
 
     <!-- Header -->
-    <header class="header">
-        <span class="hamburger" onclick="toggleSidebar()">☰</span>
-        <div class="header-title">Dashboard API</div>
+    <header class="header fixed top-0 left-0 w-full py-4 bg-gradient-to-r from-blue-800 to-purple-600 text-white text-lg font-bold shadow-md z-50 flex items-center justify-between">
+        <span class="hamburger text-2xl cursor-pointer ml-4" onclick="toggleSidebar()">☰</span>
+        <div class="header-title text-center flex-grow">Dashboard API</div>
     </header>
 
     <!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-    <button class="close-btn" onclick="toggleSidebar()">✖</button>
-    <h2 class="sidebar-title">FEATURES</h2>
-    <ul class="menu">
-        <li><a href="#"><i class="fas fa-download"></i> Downloader & Media <span class="arrow">▶</span></a></li>
-        <li><a href="#"><i class="fas fa-search"></i> Search Browsing <span class="arrow">▶</span></a></li>
-        <li><a href="#"><i class="fas fa-gamepad"></i> Game <span class="arrow">▶</span></a></li>
-        <li>
-            <button onclick="toggleSubmenu('islamic')">
-                <i class="fas fa-moon"></i> Islamic <span class="arrow">▶</span>
-            </button>
-            <ul class="submenu" id="islamic">
-                <li><a href="/api/quran"><i class="fas fa-book-open"></i> Quran API</a></li>
-                <li><a href="/api/prayer"><i class="fas fa-pray"></i> Prayer Time API</a></li>
-            </ul>
-        </li>
-    </ul>
-</div>
+    <div class="sidebar bg-gradient-to-br from-blue-800 to-purple-600 shadow-lg p-6 transition-transform transform -translate-x-full fixed top-0 left-0 h-full z-50 text-white flex flex-col" id="sidebar">
+        <button class="close-btn text-lg self-end" onclick="toggleSidebar()">✖</button>
+        <h2 class="text-xl mt-6 mb-4">FEATURES</h2>
+        <ul class="menu">
+            <li><a href="#"><i class="fas fa-download"></i> Downloader & Media <span class="arrow">▶</span></a></li>
+            <li><a href="#"><i class="fas fa-search"></i> Search Browsing <span class="arrow">▶</span></a></li>
+            <li><a href="#"><i class="fas fa-gamepad"></i> Game <span class="arrow">▶</span></a></li>
+            <li>
+                <button onclick="toggleSubmenu('islamic')">
+                    <i class="fas fa-moon"></i> Islamic <span class="arrow">▶</span>
+                </button>
+                <ul class="submenu" id="islamic">
+                    <li><a href="/api/quran"><i class="fas fa-book-open"></i> Quran API</a></li>
+                    <li><a href="/api/prayer"><i class="fas fa-pray"></i> Prayer Time API</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 
     <!-- Main Content -->
-    <main class="main-content">
-        <div class="card">
-            <h2>Jakarta Time (WIB)</h2>
+    <main class="main-content mt-20 p-4 flex-grow">
+        <div class="card bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-xl font-semibold">Jakarta Time (WIB)</h2>
             <p id="jakartaTime">Loading...</p>
         </div>
 
-        <div class="card">
-            <h2>IP Address</h2>
+        <div class="card bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-xl font-semibold">IP Address</h2>
             <p id="ipAddress">Loading...</p>
         </div>
 
-        <div class="card">
-            <h2>Battery Status</h2>
+        <div class="card bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-xl font-semibold">Battery Status</h2>
             <div class="battery-bar">
                 <div id="batteryLevelIndicator" class="battery-fill"></div>
             </div>
@@ -220,15 +154,21 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer bg-gradient-to-r from-blue-800 to-purple-600 text-white text-center py-4 text-sm fixed bottom-0 left-0 w-full">
         REST APIS CREATED BY @ FAJAR OFFICIAL
     </footer>
 
     <script>
         function toggleSidebar() {
-        document.getElementById("sidebar").classList.toggle("active");
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("active");
+            if (sidebar.classList.contains("active")) {
+                sidebar.style.transform = "translateX(0)";
+            } else {
+                sidebar.style.transform = "translateX(-100%)";
+            }
         }
-        
+
         function getJakartaTime() {
             document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
         }
