@@ -39,7 +39,10 @@
     <header class="bg-blue-600 text-white shadow p-4 gradient-bg slide-down">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-3xl font-bold">Fajar API</h1>
-            <button class="text-white text-lg">🗿</button>
+            <div class="flex items-center">
+                <span id="clock" class="text-lg font-semibold mr-4"></span>
+                <button class="text-white text-lg">🗿</button>
+            </div>
         </div>
     </header>
 
@@ -53,8 +56,7 @@
         <!-- Intro Section -->
         <div class="bg-blue-100 p-6 rounded shadow-lg slide-down">
             Create By Fajar
-            <p class="text-lg text-center text-blue-900 font-medium">
-            </p>
+            <p class="text-lg text-center text-blue-900 font-medium"></p>
         </div>
 
         <section class="mt-8">
@@ -64,7 +66,7 @@
                     <p class="text-gray-700 font-medium">4 Endpoints</p>
                 </div>
                 <ul id="endpointList">
-                    <!-- Endpoint Item -->
+                    <!-- Endpoint Items -->
                     <li class="flex justify-between items-center py-3 border-b hover-effect" data-name="tiktok download">
                         <span class="text-blue-600 font-semibold">GET</span>
                         <span class="text-gray-700">Tik Tok Download</span>
@@ -73,7 +75,6 @@
                             Try
                         </a>
                     </li>
-                    <!-- Endpoint Item -->
                     <li class="flex justify-between items-center py-3 border-b hover-effect" data-name="ytmp3 download">
                         <span class="text-blue-600 font-semibold">GET</span>
                         <span class="text-gray-700">YTMP3 Download</span>
@@ -82,7 +83,6 @@
                             Try
                         </a>
                     </li>
-                    <!-- Endpoint Item -->
                     <li class="flex justify-between items-center py-3 border-b hover-effect" data-name="ytmp4 download">
                         <span class="text-blue-600 font-semibold">GET</span>
                         <span class="text-gray-700">YTMP4 Download</span>
@@ -91,21 +91,11 @@
                             Try
                         </a>
                     </li>
-                    <!-- Endpoint Item -->
                     <li class="flex justify-between items-center py-3 border-b hover-effect" data-name="spotify search">
                         <span class="text-blue-600 font-semibold">GET</span>
                         <span class="text-gray-700">Spotify Search</span>
                         <a href="/api/downloader/spotifys?judul=hujan" target="_blank"
                             class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition" onclick="incrementRequestCount(this)">
-                            Try
-                        </a>
-                    </li>
-                    <!-- Endpoint Item -->
-                    <li class="flex justify-between items-center py-3 border-b hover-effect" data-name="spotify download">
-                        <span class="text-blue-600 font-semibold">GET</span>
-                        <span class="text-gray-700">Spotify Download</span>
-                        <a href="/api/downloader/spotify?url=https://open.spotify.com/track/514rhnksEwHUh6LxXsQ4Y9?si=jzow0lr6Qay3yeMJcrEn8A&context=spotify%3Aplaylist%3A37i9dQZF1DX5Ejj0EkURtP"
-                            target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition" onclick="incrementRequestCount(this)">
                             Try
                         </a>
                     </li>
@@ -149,6 +139,18 @@
                 console.log('Total Requests:', totalRequests);
             }
         }
+
+        // Fungsi untuk menampilkan jam WIB (Jakarta)
+        function updateClock() {
+            const now = new Date();
+            const options = { timeZone: 'Asia/Jakarta', hour12: false };
+            const timeString = now.toLocaleTimeString('id-ID', options);
+            document.getElementById('clock').innerText = timeString;
+        }
+
+        // Update jam setiap detik
+        setInterval(updateClock, 1000);
+        updateClock(); // Panggil sekali agar langsung muncul
     </script>
 </body>
 
