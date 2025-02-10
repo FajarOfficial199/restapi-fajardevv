@@ -50,6 +50,9 @@
             margin-top: 10px;
             color: #6a11cb;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -61,9 +64,15 @@
         <button class="button" onclick="updateLinks()">Set URL</button>
 
         <h2>Download Endpoints</h2>
-        <a id="tiktok-btn" href="/api/downloader/tiktok?url=" class="button" target="_blank">Download TikTok</a>
-        <a id="ytmp3-btn" href="/api/downloader/ytmp3?url=" class="button" target="_blank">Download YTMP3</a>
-        <a id="spotify-btn" href="/api/downloader/spotify?url=" class="button" target="_blank">Download Spotify</a>
+        
+        <!-- Fitur Search -->
+        <input type="text" id="search-input" placeholder="Cari downloader..." onkeyup="searchEndpoints()">
+
+        <div id="endpoints">
+            <a id="tiktok-btn" href="/api/downloader/tiktok?url=" class="button" target="_blank">Download TikTok</a>
+            <a id="ytmp3-btn" href="/api/downloader/ytmp3?url=" class="button" target="_blank">Download YTMP3</a>
+            <a id="spotify-btn" href="/api/downloader/spotify?url=" class="button" target="_blank">Download Spotify</a>
+        </div>
 
         <p id="total-requests">Total Requests (Local): <span id="request-count">0</span></p>
     </div>
@@ -89,6 +98,19 @@
         function updateRequestCount() {
             let totalRequests = localStorage.getItem("totalRequests") || 0;
             document.getElementById("request-count").innerText = totalRequests;
+        }
+
+        function searchEndpoints() {
+            let input = document.getElementById("search-input").value.toLowerCase();
+            let buttons = document.querySelectorAll("#endpoints a");
+
+            buttons.forEach(button => {
+                if (button.innerText.toLowerCase().includes(input)) {
+                    button.classList.remove("hidden");
+                } else {
+                    button.classList.add("hidden");
+                }
+            });
         }
 
         // Update tampilan total request saat halaman dimuat
