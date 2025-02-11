@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard API</title>
-
-    <!-- Import Tailwind CSS -->
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Firebase SDK -->
@@ -16,39 +16,19 @@
         body {
             font-family: 'Poppins', sans-serif;
             background: #f4f4f4;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            padding: 20px;
         }
-
         .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            width: 100%;
             max-width: 400px;
-            text-align: center;
+            margin: auto;
+            padding: 20px;
         }
-
-        h2 {
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             margin-bottom: 10px;
-            color: #1E3A8A;
         }
-
-        .info-box {
-            padding: 10px;
-            margin: 10px 0;
-            background: #f1f1f1;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
         .battery-bar {
             width: 100%;
             height: 12px;
@@ -57,41 +37,45 @@
             overflow: hidden;
             margin-top: 10px;
         }
-
         .battery-fill {
             height: 100%;
-            border-radius: 5px;
             transition: width 0.5s ease-in-out;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Dashboard API</h2>
+    <div class="bg-gradient-to-r from-blue-800 to-purple-600 p-4 text-white text-center text-lg font-semibold">
+        Dashboard API
+    </div>
 
-        <div class="info-box">
-            <strong>Jakarta Time:</strong>
+    <div class="container">
+        <div class="card">
+            <strong>Jakarta Time (WIB)</strong>
             <p id="jakartaTime">Loading...</p>
         </div>
 
-        <div class="info-box">
-            <strong>IP Address:</strong>
+        <div class="card">
+            <strong>IP Address</strong>
             <p id="ipAddress">Loading...</p>
         </div>
 
-        <div class="info-box">
-            <strong>Total Visitors:</strong>
+        <div class="card">
+            <strong>Total Visitors</strong>
             <p id="totalVisitors">Loading...</p>
         </div>
 
-        <div class="info-box">
-            <strong>Battery Status:</strong>
+        <div class="card">
+            <strong>Battery Status</strong>
             <div class="battery-bar">
                 <div id="batteryLevel" class="battery-fill" style="width: 0%; background: green;"></div>
             </div>
             <p id="batteryText">Checking...</p>
         </div>
+    </div>
+
+    <div class="bg-gradient-to-r from-blue-800 to-purple-600 p-3 text-white text-center text-sm">
+        REST APIs CREATED BY @ FAJAR OFFICIAL
     </div>
 
     <script>
@@ -109,22 +93,30 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Update Jakarta Time
+        // **Update Jakarta Time**
         setInterval(() => {
             document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
         }, 1000);
 
-        // Get IP Address
+        // **Get IP Address**
         fetch("https://api64.ipify.org?format=json")
             .then(res => res.json())
-            .then(data => document.getElementById("ipAddress").textContent = data.ip);
+            .then(data => {
+                console.log("IP Address:", data.ip);
+                document.getElementById("ipAddress").textContent = data.ip;
+            })
+            .catch(error => {
+                console.error("Error fetching IP:", error);
+                document.getElementById("ipAddress").textContent = "Failed to load";
+            });
 
-        // Update Total Visitors
+        // **Update Total Visitors**
         function updateTotalVisitors() {
             const visitorsRef = database.ref("visitors");
+
             visitorsRef.once("value").then(snapshot => {
                 let total = snapshot.val() || 0;
-
+                
                 if (!sessionStorage.getItem("visited")) {
                     total++;
                     visitorsRef.set(total);
@@ -132,6 +124,10 @@
                 }
 
                 document.getElementById("totalVisitors").textContent = total;
+                console.log("Total Visitors:", total);
+            }).catch(error => {
+                console.error("Error fetching visitors:", error);
+                document.getElementById("totalVisitors").textContent = "Failed to load";
             });
 
             visitorsRef.on("value", snapshot => {
@@ -140,21 +136,29 @@
         }
         updateTotalVisitors();
 
-        // Battery Status
-        navigator.getBattery().then(battery => {
-            function updateBattery() {
-                let level = Math.round(battery.level * 100); // Bulatkan angka baterai
-                document.getElementById("batteryLevel").style.width = level + "%";
-                document.getElementById("batteryText").textContent = level + "%";
+        // **Battery Status**
+        if ("getBattery" in navigator) {
+            navigator.getBattery().then(battery => {
+                function updateBattery() {
+                    let level = Math.round(battery.level * 100);
+                    document.getElementById("batteryLevel").style.width = level + "%";
+                    document.getElementById("batteryText").textContent = level + "%";
 
-                // Ubah warna baterai berdasarkan level
-                let color = level > 50 ? "green" : level > 20 ? "orange" : "red";
-                document.getElementById("batteryLevel").style.background = color;
-            }
+                    let color = level > 50 ? "green" : level > 20 ? "orange" : "red";
+                    document.getElementById("batteryLevel").style.background = color;
 
-            updateBattery();
-            battery.addEventListener("levelchange", updateBattery);
-        });
+                    console.log("Battery Level:", level);
+                }
+
+                updateBattery();
+                battery.addEventListener("levelchange", updateBattery);
+            }).catch(error => {
+                console.error("Battery API Error:", error);
+                document.getElementById("batteryText").textContent = "Not Supported";
+            });
+        } else {
+            document.getElementById("batteryText").textContent = "Not Supported";
+        }
     </script>
 
 </body>
