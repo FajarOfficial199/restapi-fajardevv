@@ -159,7 +159,7 @@ app.get("/api/downloader/spotifys", async (req, res) => {
     }
 });
 
-app.get('/api/ssweb', async (req, res) => {
+app.get('/api/downloader/ssweb', async (req, res) => {
     const url = req.query.url;
     if (!url) {
         return res.status(400).json({
