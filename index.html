@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard API</title>
+    
+    <!-- Import Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/YOUR_FA_KIT.js" crossorigin="anonymous"></script>
-    <!-- Tambahkan Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -17,14 +23,12 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
         }
 
-        /* Sidebar */
         .sidebar {
             position: fixed;
             top: 0;
-            left: -280px;
+            left: -260px;
             width: 260px;
             height: 100%;
             background: linear-gradient(135deg, #1E3A8A, #9333EA);
@@ -41,66 +45,16 @@
             left: 0;
         }
 
-        /* Sidebar Menu */
-        .menu {
-            list-style: none;
-            padding: 0;
-        }
-
-        .menu li {
-            margin-bottom: 10px;
-        }
-
-        .menu a, .menu button {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-decoration: none;
-            color: white;
-            font-size: 16px;
-            padding: 12px;
-            border-radius: 8px;
-            transition: background 0.3s ease-in-out;
-            background: rgba(255, 255, 255, 0.1);
-            width: 100%;
-            border: none;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        .menu a:hover, .menu button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Submenu */
         .submenu {
-            padding-left: 20px;
-            overflow: hidden;
             max-height: 0;
+            overflow: hidden;
             transition: max-height 0.5s ease-in-out;
         }
 
         .submenu.active {
-            max-height: 1000px;
+            max-height: 300px;
         }
 
-        .submenu a {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .arrow {
-            transition: transform 0.3s ease;
-        }
-
-        .rotate {
-            transform: rotate(90deg);
-        }
-
-        .up-arrow {
-            transform: rotate(-90deg);
-        }
-
-        /* Battery Bar */
         .battery-bar {
             width: 100%;
             height: 12px;
@@ -117,75 +71,44 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col justify-between">
+<body class="bg-gray-100 flex flex-col">
 
     <!-- Header -->
-    <header class="header fixed top-0 left-0 w-full py-4 bg-gradient-to-r from-blue-800 to-purple-600 text-white text-lg font-bold shadow-md z-50 flex items-center justify-between">
-        <span class="hamburger text-2xl cursor-pointer ml-4" onclick="toggleSidebar()">☰</span>
-        <div class="header-title text-center flex-grow">Dashboard API</div>
+    <header class="fixed top-0 left-0 w-full py-4 bg-gradient-to-r from-blue-800 to-purple-600 text-white text-lg font-bold shadow-md z-50 flex items-center justify-between">
+        <span class="text-2xl cursor-pointer ml-4" onclick="toggleSidebar()">☰</span>
+        <div class="text-center flex-grow">Dashboard API</div>
     </header>
 
     <!-- Sidebar -->
-    <div class="sidebar bg-gradient-to-br from-blue-800 to-purple-600 shadow-lg p-6 transition-transform transform -translate-x-full fixed top-0 left-0 h-full z-50 text-white flex flex-col" id="sidebar">
+    <div class="sidebar" id="sidebar">
         <button class="close-btn text-lg self-end" onclick="toggleSidebar()">✖</button>
         <h2 class="text-xl mt-6 mb-4">FEATURES</h2>
         <ul class="menu">
-            <ul>
-                <li>
-                    <button onclick="toggleSubmenu('downloader')">
-                        <i class="fas fa-download"></i> Downloader & Media <span id="downloader-arrow" class="arrow">></span>
-                    </button>
-                    <ul class="submenu" id="downloader">
-                        <li><a href="/api/downloader/tiktok?url="><i class="fas fa-video"></i>Tiktok Downloader</a></li>
-                        <li><a href="/api/downloader/spotify?url="><i class="fas fa-music"></i>Spotify Downloader</a></li>
-                        <li><a href="/api/downloader/ytmp3?url="><i class="fas fa-music"></i>Ytmp3 Downloader</a></li>
-                        <li><a href="/api/downloader/ytmp4?url="><i class="fas fa-music"></i>Ytmp4 Downloader</a></li>
-                        <li><a href="/api/downloader/mediafire?url="><i class="fas fa-music"></i>MediaFire Downloader</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <button onclick="toggleSubmenu('search')">
-                        <i class="fas fa-search"></i> Search Browsing <span id="search-arrow" class="arrow">></span>
-                    </button>
-                    <ul class="submenu" id="search">
-                        <li><a href="/api/search/ip?ipnya="><i class="fas fa-globe"></i> Track IP</a></li>
-                        <li><a href="/api/image"><i class="fas fa-images"></i> Image Search</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <button onclick="toggleSubmenu('game')">
-                        <i class="fas fa-gamepad"></i> Game <span id="game-arrow" class="arrow">></span>
-                    </button>
-                    <ul class="submenu" id="game">
-                        <li><a href="/api/chess"><i class="fas fa-chess"></i> Chess Game</a></li>
-                        <li><a href="/api/arcade"><i class="fas fa-gamepad"></i> Arcade Games</a></li>
-                    </ul>
-                </li>
-            </ul>
+            <li>
+                <button onclick="toggleSubmenu('downloader')">
+                    <i class="fas fa-download"></i> Downloader & Media <span id="downloader-arrow">▶</span>
+                </button>
+                <ul class="submenu" id="downloader">
+                    <li><a href="/api/downloader/tiktok?url="><i class="fas fa-video"></i> Tiktok</a></li>
+                    <li><a href="/api/downloader/spotify?url="><i class="fas fa-music"></i> Spotify</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
 
     <!-- Main Content -->
-    <main class="main-content mt-20 p-4 flex-grow">
-        <div class="card bg-white p-6 rounded-lg shadow-md mb-6">
-            <h2 class="text-xl font-semibold">Jakarta Time (WIB)</h2>
+    <main class="mt-20 p-4 flex-grow">
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-xl font-semibold">Jakarta Time</h2>
             <p id="jakartaTime">Loading...</p>
         </div>
 
-        <div class="card bg-white p-6 rounded-lg shadow-md mb-6">
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 class="text-xl font-semibold">IP Address</h2>
             <p id="ipAddress">Loading...</p>
         </div>
 
-        <div class="card bg-white p-6 rounded-lg shadow-md mb-6 flex items-center">
-            <i class="fas fa-users text-2xl text-blue-600 mr-3"></i> <!-- Ikon Font Awesome -->
-            <div>
-                <h2 class="text-xl font-semibold">Total Visitors</h2>
-                <p id="totalVisitors" class="text-lg font-bold">Loading...</p>
-            </div>
-        </div>
-
-        <div class="card bg-white p-6 rounded-lg shadow-md mb-6">
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 class="text-xl font-semibold">Battery Status</h2>
             <div class="battery-bar">
                 <div id="batteryLevelIndicator" class="battery-fill"></div>
@@ -194,21 +117,16 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer bg-gradient-to-r from-blue-800 to-purple-600 text-white text-center py-4 text-sm fixed bottom-0 left-0 w-full">
-        REST APIS CREATED BY @ FAJAR OFFICIAL
-    </footer>
-
     <script>
-        // Firebase configuration
+        // Firebase Configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyBFseGxdtRQgLCFDQOgf7hmRMvWZo-YUew",
-            authDomain: "fajar-official-9c2fc.firebaseapp.com",
-            projectId: "fajar-official-9c2fc",
-            storageBucket: "fajar-official-9c2fc.firebasestorage.app",
-            messagingSenderId: "984202918822",
-            appId: "1:984202918822:web:9deb22d3afa7b165786d67",
-            measurementId: "G-DW7XT5LCRC"
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+            databaseURL: "YOUR_FIREBASE_DB_URL",
+            projectId: "YOUR_FIREBASE_PROJECT_ID",
+            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_FIREBASE_MESSAGING_ID",
+            appId: "YOUR_FIREBASE_APP_ID"
         };
 
         // Initialize Firebase
@@ -216,26 +134,14 @@
         const database = firebase.database();
 
         function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            sidebar.classList.toggle("active");
-            if (sidebar.classList.contains("active")) {
-                sidebar.style.transform = "translateX(0)";
-            } else {
-                sidebar.style.transform = "translateX(-100%)";
-            }
+            document.getElementById("sidebar").classList.toggle("active");
         }
 
         function toggleSubmenu(id) {
             const submenu = document.getElementById(id);
             const arrow = document.getElementById(`${id}-arrow`);
             submenu.classList.toggle("active");
-            if (submenu.classList.contains("active")) {
-                arrow.textContent = "^";
-                submenu.style.maxHeight = submenu.scrollHeight + "px";
-            } else {
-                arrow.textContent = ">";
-                submenu.style.maxHeight = "0";
-            }
+            arrow.innerHTML = submenu.classList.contains("active") ? "▼" : "▶";
         }
 
         function getJakartaTime() {
@@ -250,51 +156,25 @@
                 let response = await fetch("https://api64.ipify.org?format=json");
                 let data = await response.json();
                 document.getElementById("ipAddress").textContent = data.ip;
-            } catch (error) {
+            } catch {
                 document.getElementById("ipAddress").textContent = "Gagal mengambil IP";
             }
         }
         getIPAddress();
 
         async function getBatteryStatus() {
-            if ("getBattery" in navigator) {
+            if (navigator.getBattery) {
                 let battery = await navigator.getBattery();
                 function updateBattery() {
                     let level = Math.floor(battery.level * 100);
                     document.getElementById("batteryPercentage").textContent = level + "%";
                     document.getElementById("batteryLevelIndicator").style.width = level + "%";
-                    document.getElementById("batteryLevelIndicator").style.background = level > 20 ? "green" : "red";
                 }
                 updateBattery();
                 battery.addEventListener("levelchange", updateBattery);
-            } else {
-                document.getElementById("batteryPercentage").textContent = "Battery API tidak didukung";
             }
         }
         getBatteryStatus();
-
-        async function updateTotalVisitors() {
-            try {
-                const visitorsRef = database.ref('visitors');
-                const snapshot = await visitorsRef.once('value');
-                let totalVisitors = snapshot.val() || 0;
-
-                let sessionVisited = sessionStorage.getItem("visited");
-
-                // Jika belum pernah mengunjungi dalam sesi ini, tambahkan visitor
-                if (!sessionVisited) {
-                    totalVisitors += 1;
-                    visitorsRef.set(totalVisitors);
-                    sessionStorage.setItem("visited", "true"); // Tandai bahwa sesi ini sudah dihitung
-                }
-
-                document.getElementById("totalVisitors").textContent = totalVisitors;
-            } catch (error) {
-                document.getElementById("totalVisitors").textContent = "Gagal mengambil total pengunjung";
-            }
-        }
-        
-        updateTotalVisitors();
     </script>
 
 </body>
