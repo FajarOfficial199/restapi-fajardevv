@@ -177,7 +177,7 @@ app.get('/api/downloader/mediafire', async (req, res) => {
         });
     }
 
-    const check = await checkApiKey(apikey);
+    const check = await getUserApiKey(apikey);
     if (!check) {
         return res.status(403).json({
             status: false,
