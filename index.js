@@ -7,7 +7,6 @@ const axios = require("axios")
 const fajar = require('./function/index') 
 const { default: makeWaSocket, useMultiFileAuthState, fetchLatestBaileysVersion } = require('@whiskeysockets/baileys');
 const pino = require('pino');
-const cookieParser = require("cookie-parser");
 const { setTimeout: sleep } = require('timers/promises');
 
 //seettingsjs
