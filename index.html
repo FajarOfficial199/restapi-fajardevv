@@ -19,9 +19,15 @@
         body {
             font-family: 'Poppins', sans-serif;
             background: #f4f4f4;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+        }
+
+        .sidebar {
+            width: 280px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .hidden-sidebar {
+            transform: translateX(-100%);
         }
 
         .battery-bar {
@@ -38,17 +44,56 @@
             border-radius: 5px;
             transition: width 0.5s ease-in-out;
         }
+
+        .arrow {
+            float: right;
+        }
+
+        .submenu {
+            display: none;
+            padding-left: 20px;
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col">
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 w-full py-4 bg-gradient-to-r from-blue-800 to-purple-600 text-white text-lg font-bold shadow-md z-50 flex items-center justify-center">
+    <header class="fixed top-0 left-0 w-full py-4 bg-gradient-to-r from-blue-800 to-purple-600 text-white text-lg font-bold shadow-md z-50 flex items-center px-4">
+        <button class="text-2xl mr-4" onclick="toggleSidebar()">☰</button>
         Dashboard API
     </header>
 
+    <!-- Sidebar -->
+    <div class="sidebar bg-gradient-to-br from-blue-800 to-purple-600 shadow-lg p-6 fixed top-0 left-0 h-full z-50 text-white flex flex-col hidden-sidebar" id="sidebar">
+        <button class="close-btn text-lg self-end" onclick="toggleSidebar()">✖</button>
+        <h2 class="text-xl mt-6 mb-4">FEATURES</h2>
+        <ul class="menu">
+            <li>
+                <button onclick="toggleSubmenu('downloader')">
+                    <i class="fas fa-download"></i> Downloader & Media <span id="downloader-arrow" class="arrow">></span>
+                </button>
+                <ul class="submenu" id="downloader">
+                    <li><a href="/api/downloader/tiktok?url="><i class="fas fa-video"></i> Tiktok Downloader</a></li>
+                    <li><a href="/api/downloader/spotify?url="><i class="fas fa-music"></i> Spotify Downloader</a></li>
+                    <li><a href="/api/downloader/ytmp3?url="><i class="fas fa-music"></i> Ytmp3 Downloader</a></li>
+                    <li><a href="/api/downloader/ytmp4?url="><i class="fas fa-music"></i> Ytmp4 Downloader</a></li>
+                    <li><a href="/api/downloader/mediafire?url="><i class="fas fa-music"></i> MediaFire Downloader</a></li>
+                </ul>
+            </li>
+            <li>
+                <button onclick="toggleSubmenu('search')">
+                    <i class="fas fa-search"></i> Search Browsing <span id="search-arrow" class="arrow">></span>
+                </button>
+                <ul class="submenu" id="search">
+                    <li><a href="/api/search/ip?ipnya="><i class="fas fa-globe"></i> Track IP</a></li>
+                    <li><a href="/api/image"><i class="fas fa-images"></i> Image Search</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
     <!-- Main Content -->
-    <main class="mt-20 p-4 flex-grow">
+    <main class="mt-20 p-4">
         <div class="bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 class="text-xl font-semibold">Jakarta Time</h2>
             <p id="jakartaTime">Loading...</p>
@@ -62,14 +107,6 @@
         <div class="bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 class="text-xl font-semibold">Total Visitors</h2>
             <p id="totalVisitors" class="text-lg font-bold">Loading...</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
-            <h2 class="text-xl font-semibold">Battery Status</h2>
-            <div class="battery-bar">
-                <div id="batteryLevelIndicator" class="battery-fill"></div>
-            </div>
-            <span id="batteryPercentage">0%</span>
         </div>
     </main>
 
@@ -86,70 +123,63 @@
             measurementId: "G-DW7XT5LCRC"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
         // Update Jakarta Time
         function updateJakartaTime() {
-            let time = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
-            document.getElementById("jakartaTime").textContent = time;
+            document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
         }
         setInterval(updateJakartaTime, 1000);
         updateJakartaTime();
 
         // Fetch IP Address
         async function getIPAddress() {
-            try {
-                let response = await fetch("https://api64.ipify.org?format=json");
-                let data = await response.json();
-                document.getElementById("ipAddress").textContent = data.ip;
-            } catch {
-                document.getElementById("ipAddress").textContent = "Gagal mengambil IP";
-            }
+            let response = await fetch("https://api64.ipify.org?format=json");
+            let data = await response.json();
+            document.getElementById("ipAddress").textContent = data.ip;
         }
         getIPAddress();
 
-        // Fetch Battery Status
-        async function getBatteryStatus() {
-            if ("getBattery" in navigator) {
-                let battery = await navigator.getBattery();
-                function updateBattery() {
-                    let level = Math.floor(battery.level * 100);
-                    document.getElementById("batteryPercentage").textContent = level + "%";
-                    document.getElementById("batteryLevelIndicator").style.width = level + "%";
-                    document.getElementById("batteryLevelIndicator").style.background = level > 20 ? "green" : "red";
-                }
-                updateBattery();
-                battery.addEventListener("levelchange", updateBattery);
+        // Sidebar Toggle
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("hidden-sidebar");
+        }
+
+        // Toggle Submenu
+        function toggleSubmenu(id) {
+            let submenu = document.getElementById(id);
+            let arrow = document.getElementById(`${id}-arrow`);
+            if (submenu.style.display === "block") {
+                submenu.style.display = "none";
+                arrow.textContent = ">";
             } else {
-                document.getElementById("batteryPercentage").textContent = "Battery API tidak didukung";
+                submenu.style.display = "block";
+                arrow.textContent = "v";
             }
         }
-        getBatteryStatus();
 
         // Update Total Visitors
-        async function updateTotalVisitors() {
-            try {
-                const visitorsRef = database.ref('visitors');
-                const snapshot = await visitorsRef.once('value');
+        function updateTotalVisitors() {
+            const visitorsRef = database.ref("visitors");
+
+            visitorsRef.once("value").then((snapshot) => {
                 let totalVisitors = snapshot.val() || 0;
 
-                let sessionVisited = sessionStorage.getItem("visited");
-
-                // Jika belum pernah mengunjungi dalam sesi ini, tambahkan visitor
-                if (!sessionVisited) {
+                if (!sessionStorage.getItem("visited")) {
                     totalVisitors += 1;
                     visitorsRef.set(totalVisitors);
-                    sessionStorage.setItem("visited", "true"); // Tandai bahwa sesi ini sudah dihitung
+                    sessionStorage.setItem("visited", "true");
                 }
 
                 document.getElementById("totalVisitors").textContent = totalVisitors;
-            } catch (error) {
-                document.getElementById("totalVisitors").textContent = "Gagal mengambil total pengunjung";
-            }
+            });
         }
-        
+
+        database.ref("visitors").on("value", (snapshot) => {
+            document.getElementById("totalVisitors").textContent = snapshot.val() || 0;
+        });
+
         updateTotalVisitors();
     </script>
 
