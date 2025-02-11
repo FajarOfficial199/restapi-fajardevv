@@ -10,7 +10,7 @@ const pino = require('pino');
 const { setTimeout: sleep } = require('timers/promises');
 
 //seettingsjs
-const creator = global.creator
+var creator = global.creator
 
 
 // Middleware
