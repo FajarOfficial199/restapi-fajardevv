@@ -222,10 +222,10 @@ app.get('/api/ssweb', async (req, res) => {
     }
 
     try {
-        const screenshot = await ssweb(url);
+        const screenshot = await ptz.ssweb(url);
         res.json({
             status: true,
-            creator: "YourName",
+            creator: `${creator},
             results: {
                 image: `data:image/png;base64,${Buffer.from(screenshot.result).toString('base64')}`
             }
