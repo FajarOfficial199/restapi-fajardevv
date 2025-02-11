@@ -169,7 +169,7 @@ app.get('/api/downloader/ssweb', async (req, res) => {
     }
 
     try {
-        const screenshot = await ptz.ssweb(url);
+        const screenshot = await fajar.ssweb(url);
         res.json({
             status: true,
             creator: `${creator}`,
