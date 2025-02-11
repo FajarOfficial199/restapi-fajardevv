@@ -212,6 +212,33 @@ app.get('/api/downloader/mediafire', async (req, res) => {
     }
 });
 
+app.get('/api/ssweb', async (req, res) => {
+    const url = req.query.url;
+    if (!url) {
+        return res.status(400).json({
+            status: false,
+            message: "Parameter 'url' tidak boleh kosong."
+        });
+    }
+
+    try {
+        const screenshot = await ssweb(url);
+        res.json({
+            status: true,
+            creator: "YourName",
+            results: {
+                image: `data:image/png;base64,${Buffer.from(screenshot.result).toString('base64')}`
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            message: "Gagal mengambil screenshot.",
+            error: error.message
+        });
+    }
+});
+
 
 app.use((req, res, next) => {
   res.status(404).send("Halaman tidak ditemukan");
