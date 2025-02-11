@@ -12,8 +12,6 @@ const { setTimeout: sleep } = require('timers/promises');
 const { users, addUser, getUserApiKey, checkApiKey } = require("./apikey/myapikey");
 
 //seettingsjs
-const allowedIP = global.allowedIP
-global.maintenance = false
 const creator = global.creator
 
 
@@ -251,21 +249,6 @@ app.get("/myapikey", async (req, res) => {
         userId,
         apikey
     });
-});
-
-app.use((req, res, next) => {
-    if (global.maintenance) {
-        const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
-        // Cek apakah IP yang mengakses adalah allowedIP
-        if (clientIP === allowedIP || clientIP === `::ffff:${allowedIP}`) {
-            next(); // Lanjutkan akses
-        } else {
-            return res.status(503).send("SORRY, WEB INI SEDANG PENAMBAHAN FITUR");
-        }
-    } else {
-        next(); // Jika maintenance mode dimatikan, lanjutkan request
-    }
 });
 
 app.use((req, res, next) => {
