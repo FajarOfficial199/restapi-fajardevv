@@ -179,6 +179,7 @@
         <h2 class="text-xl font-semibold">Total Visitors</h2>
         <p id="totalVisitors" class="text-lg font-bold">Loading...</p>
     </div>
+</div>
 
         <div class="card bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 class="text-xl font-semibold">Battery Status</h2>
@@ -254,15 +255,19 @@
         getBatteryStatus();
 
         function updateTotalVisitors() {
-        let totalVisitors = localStorage.getItem("totalVisitors");
-        if (!totalVisitors) {
-            totalVisitors = 1;
-        } else {
+        let totalVisitors = localStorage.getItem("totalVisitors") || 0;
+        let sessionVisited = sessionStorage.getItem("visited");
+
+        // Jika belum pernah mengunjungi dalam sesi ini, tambahkan visitor
+        if (!sessionVisited) {
             totalVisitors = parseInt(totalVisitors) + 1;
+            localStorage.setItem("totalVisitors", totalVisitors);
+            sessionStorage.setItem("visited", "true"); // Tandai bahwa sesi ini sudah dihitung
         }
-        localStorage.setItem("totalVisitors", totalVisitors);
+
         document.getElementById("totalVisitors").textContent = totalVisitors;
     }
+    
     updateTotalVisitors();
     </script>
 
