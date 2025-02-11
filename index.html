@@ -197,30 +197,32 @@
     };
 
     // Inisialisasi Firebase
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
-    async function updateTotalVisitors() {
-        let visitorId = localStorage.getItem("visitorId");
+// Fungsi untuk memperbarui jumlah pengunjung
+async function updateTotalVisitors() {
+    let visitorId = localStorage.getItem("visitorId");
 
-        if (!visitorId) {
-            visitorId = Date.now().toString(); // Buat ID unik
-            localStorage.setItem("visitorId", visitorId);
+    if (!visitorId) {
+        visitorId = Date.now().toString(); // Buat ID unik
+        localStorage.setItem("visitorId", visitorId);
 
-            // Tambahkan visitor baru ke database
-            const visitorRef = database.ref("visitors");
-            visitorRef.transaction((currentVisitors) => {
-                return (currentVisitors || 0) + 1;
-            });
-        }
-
-        // Ambil total visitor dari database dan tampilkan
-        database.ref("visitors").on("value", (snapshot) => {
-            document.getElementById("totalVisitors").textContent = snapshot.val() || 0;
+        // Tambahkan visitor baru ke database
+        const visitorRef = database.ref("visitors");
+        visitorRef.transaction((currentVisitors) => {
+            return (currentVisitors || 0) + 1;
         });
     }
 
-    updateTotalVisitors();
+    // **Dengarkan perubahan data secara real-time**
+    database.ref("visitors").on("value", (snapshot) => {
+        document.getElementById("totalVisitors").textContent = snapshot.val() || 0;
+    });
+}
+
+// Jalankan fungsi saat halaman dimuat
+updateTotalVisitors();
 </script>
 
 </body>
