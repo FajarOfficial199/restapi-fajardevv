@@ -13,7 +13,7 @@ const { users, addUser, getUserApiKey, checkApiKey } = require("./apikey/myapike
 
 //seettingsjs
 const allowedIP = global.allowedIP
-global.maintenance = true
+global.maintenance = false
 const creator = global.creator
 
 
