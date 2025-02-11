@@ -19,17 +19,86 @@
         body {
             font-family: 'Poppins', sans-serif;
             background: #f4f4f4;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
+        /* Sidebar */
         .sidebar {
-            width: 280px;
-            transition: transform 0.3s ease-in-out;
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 260px;
+            height: 100%;
+            background: linear-gradient(135deg, #1E3A8A, #9333EA);
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            transition: left 0.4s ease-in-out;
+            z-index: 2000;
+            color: white;
+            display: flex;
+            flex-direction: column;
         }
 
-        .hidden-sidebar {
-            transform: translateX(-100%);
+        .sidebar.active {
+            left: 0;
         }
 
+        /* Sidebar Menu */
+        .menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .menu li {
+            margin-bottom: 10px;
+        }
+
+        .menu a, .menu button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 12px;
+            border-radius: 8px;
+            transition: background 0.3s ease-in-out;
+            background: rgba(255, 255, 255, 0.1);
+            width: 100%;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .menu a:hover, .menu button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Submenu */
+        .submenu {
+            padding-left: 20px;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.5s ease-in-out;
+        }
+
+        .submenu.active {
+            max-height: 1000px;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .rotate {
+            transform: rotate(90deg);
+        }
+
+        /* Battery Bar */
         .battery-bar {
             width: 100%;
             height: 12px;
@@ -44,70 +113,39 @@
             border-radius: 5px;
             transition: width 0.5s ease-in-out;
         }
-
-        .arrow {
-            float: right;
-        }
-
-        .submenu {
-            display: none;
-            padding-left: 20px;
-        }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col">
-
-    <!-- Header -->
-    <header class="fixed top-0 left-0 w-full py-4 bg-gradient-to-r from-blue-800 to-purple-600 text-white text-lg font-bold shadow-md z-50 flex items-center px-4">
-        <button class="text-2xl mr-4" onclick="toggleSidebar()">☰</button>
-        Dashboard API
-    </header>
+<body>
 
     <!-- Sidebar -->
-    <div class="sidebar bg-gradient-to-br from-blue-800 to-purple-600 shadow-lg p-6 fixed top-0 left-0 h-full z-50 text-white flex flex-col hidden-sidebar" id="sidebar">
-        <button class="close-btn text-lg self-end" onclick="toggleSidebar()">✖</button>
-        <h2 class="text-xl mt-6 mb-4">FEATURES</h2>
+    <div class="sidebar" id="sidebar">
+        <button onclick="toggleSidebar()">✖</button>
+        <h2>FEATURES</h2>
         <ul class="menu">
-            <li>
-                <button onclick="toggleSubmenu('downloader')">
-                    <i class="fas fa-download"></i> Downloader & Media <span id="downloader-arrow" class="arrow">></span>
-                </button>
+            <li><button onclick="toggleSubmenu('downloader')">Downloader & Media <span class="arrow">></span></button>
                 <ul class="submenu" id="downloader">
-                    <li><a href="/api/downloader/tiktok?url="><i class="fas fa-video"></i> Tiktok Downloader</a></li>
-                    <li><a href="/api/downloader/spotify?url="><i class="fas fa-music"></i> Spotify Downloader</a></li>
-                    <li><a href="/api/downloader/ytmp3?url="><i class="fas fa-music"></i> Ytmp3 Downloader</a></li>
-                    <li><a href="/api/downloader/ytmp4?url="><i class="fas fa-music"></i> Ytmp4 Downloader</a></li>
-                    <li><a href="/api/downloader/mediafire?url="><i class="fas fa-music"></i> MediaFire Downloader</a></li>
-                </ul>
-            </li>
-            <li>
-                <button onclick="toggleSubmenu('search')">
-                    <i class="fas fa-search"></i> Search Browsing <span id="search-arrow" class="arrow">></span>
-                </button>
-                <ul class="submenu" id="search">
-                    <li><a href="/api/search/ip?ipnya="><i class="fas fa-globe"></i> Track IP</a></li>
-                    <li><a href="/api/image"><i class="fas fa-images"></i> Image Search</a></li>
+                    <li><a href="#">Tiktok Downloader</a></li>
                 </ul>
             </li>
         </ul>
     </div>
 
     <!-- Main Content -->
-    <main class="mt-20 p-4">
-        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
-            <h2 class="text-xl font-semibold">Jakarta Time</h2>
-            <p id="jakartaTime">Loading...</p>
-        </div>
+    <main>
+        <h2>Jakarta Time</h2>
+        <p id="jakartaTime">Loading...</p>
 
-        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
-            <h2 class="text-xl font-semibold">IP Address</h2>
-            <p id="ipAddress">Loading...</p>
-        </div>
+        <h2>IP Address</h2>
+        <p id="ipAddress">Loading...</p>
 
-        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
-            <h2 class="text-xl font-semibold">Total Visitors</h2>
-            <p id="totalVisitors" class="text-lg font-bold">Loading...</p>
+        <h2>Total Visitors</h2>
+        <p id="totalVisitors">Loading...</p>
+
+        <h2>Battery Status</h2>
+        <div class="battery-bar">
+            <div id="batteryLevel" class="battery-fill" style="width: 0%; background: green;"></div>
         </div>
+        <p id="batteryText">Checking...</p>
     </main>
 
     <script>
@@ -119,68 +157,63 @@
             projectId: "fajar-official-9c2fc",
             storageBucket: "fajar-official-9c2fc.appspot.com",
             messagingSenderId: "984202918822",
-            appId: "1:984202918822:web:9deb22d3afa7b165786d67",
-            measurementId: "G-DW7XT5LCRC"
+            appId: "1:984202918822:web:9deb22d3afa7b165786d67"
         };
 
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
         // Update Jakarta Time
-        function updateJakartaTime() {
+        setInterval(() => {
             document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
-        }
-        setInterval(updateJakartaTime, 1000);
-        updateJakartaTime();
+        }, 1000);
 
-        // Fetch IP Address
-        async function getIPAddress() {
-            let response = await fetch("https://api64.ipify.org?format=json");
-            let data = await response.json();
-            document.getElementById("ipAddress").textContent = data.ip;
-        }
-        getIPAddress();
+        // Get IP Address
+        fetch("https://api64.ipify.org?format=json")
+            .then(res => res.json())
+            .then(data => document.getElementById("ipAddress").textContent = data.ip);
 
         // Sidebar Toggle
         function toggleSidebar() {
-            document.getElementById("sidebar").classList.toggle("hidden-sidebar");
+            document.getElementById("sidebar").classList.toggle("active");
         }
 
         // Toggle Submenu
         function toggleSubmenu(id) {
-            let submenu = document.getElementById(id);
-            let arrow = document.getElementById(`${id}-arrow`);
-            if (submenu.style.display === "block") {
-                submenu.style.display = "none";
-                arrow.textContent = ">";
-            } else {
-                submenu.style.display = "block";
-                arrow.textContent = "v";
-            }
+            document.getElementById(id).classList.toggle("active");
         }
 
         // Update Total Visitors
         function updateTotalVisitors() {
             const visitorsRef = database.ref("visitors");
-
-            visitorsRef.once("value").then((snapshot) => {
-                let totalVisitors = snapshot.val() || 0;
+            visitorsRef.once("value").then(snapshot => {
+                let total = snapshot.val() || 0;
 
                 if (!sessionStorage.getItem("visited")) {
-                    totalVisitors += 1;
-                    visitorsRef.set(totalVisitors);
+                    total++;
+                    visitorsRef.set(total);
                     sessionStorage.setItem("visited", "true");
                 }
 
-                document.getElementById("totalVisitors").textContent = totalVisitors;
+                document.getElementById("totalVisitors").textContent = total;
+            });
+
+            visitorsRef.on("value", snapshot => {
+                document.getElementById("totalVisitors").textContent = snapshot.val() || 0;
             });
         }
-
-        database.ref("visitors").on("value", (snapshot) => {
-            document.getElementById("totalVisitors").textContent = snapshot.val() || 0;
-        });
-
         updateTotalVisitors();
+
+        // Battery Status
+        navigator.getBattery().then(battery => {
+            function updateBattery() {
+                let level = battery.level * 100;
+                document.getElementById("batteryLevel").style.width = level + "%";
+                document.getElementById("batteryText").textContent = level + "%";
+            }
+            updateBattery();
+            battery.addEventListener("levelchange", updateBattery);
+        });
     </script>
 
 </body>
