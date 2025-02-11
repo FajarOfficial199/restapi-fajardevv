@@ -173,6 +173,13 @@
             <p id="ipAddress">Loading...</p>
         </div>
 
+        <div class="card bg-white p-6 rounded-lg shadow-md mb-6 flex items-center">
+    <i class="fas fa-users text-2xl text-blue-600 mr-3"></i> <!-- Ikon Font Awesome -->
+    <div>
+        <h2 class="text-xl font-semibold">Total Visitors</h2>
+        <p id="totalVisitors" class="text-lg font-bold">Loading...</p>
+    </div>
+
         <div class="card bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 class="text-xl font-semibold">Battery Status</h2>
             <div class="battery-bar">
@@ -245,6 +252,18 @@
             }
         }
         getBatteryStatus();
+
+        function updateTotalVisitors() {
+        let totalVisitors = localStorage.getItem("totalVisitors");
+        if (!totalVisitors) {
+            totalVisitors = 1;
+        } else {
+            totalVisitors = parseInt(totalVisitors) + 1;
+        }
+        localStorage.setItem("totalVisitors", totalVisitors);
+        document.getElementById("totalVisitors").textContent = totalVisitors;
+    }
+    updateTotalVisitors();
     </script>
 
 </body>
