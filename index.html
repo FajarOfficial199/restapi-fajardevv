@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard API</title>
-    
+
     <!-- Import Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -19,40 +19,9 @@
         body {
             font-family: 'Poppins', sans-serif;
             background: #f4f4f4;
-            color: #333;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -260px;
-            width: 260px;
-            height: 100%;
-            background: linear-gradient(135deg, #1E3A8A, #9333EA);
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            transition: left 0.4s ease-in-out;
-            z-index: 2000;
-            color: white;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar.active {
-            left: 0;
-        }
-
-        .submenu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
-        }
-
-        .submenu.active {
-            max-height: 300px;
         }
 
         .battery-bar {
@@ -74,27 +43,9 @@
 <body class="bg-gray-100 flex flex-col">
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 w-full py-4 bg-gradient-to-r from-blue-800 to-purple-600 text-white text-lg font-bold shadow-md z-50 flex items-center justify-between">
-        <span class="text-2xl cursor-pointer ml-4" onclick="toggleSidebar()">☰</span>
-        <div class="text-center flex-grow">Dashboard API</div>
+    <header class="fixed top-0 left-0 w-full py-4 bg-gradient-to-r from-blue-800 to-purple-600 text-white text-lg font-bold shadow-md z-50 flex items-center justify-center">
+        Dashboard API
     </header>
-
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <button class="close-btn text-lg self-end" onclick="toggleSidebar()">✖</button>
-        <h2 class="text-xl mt-6 mb-4">FEATURES</h2>
-        <ul class="menu">
-            <li>
-                <button onclick="toggleSubmenu('downloader')">
-                    <i class="fas fa-download"></i> Downloader & Media <span id="downloader-arrow">▶</span>
-                </button>
-                <ul class="submenu" id="downloader">
-                    <li><a href="/api/downloader/tiktok?url="><i class="fas fa-video"></i> Tiktok</a></li>
-                    <li><a href="/api/downloader/spotify?url="><i class="fas fa-music"></i> Spotify</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
 
     <!-- Main Content -->
     <main class="mt-20 p-4 flex-grow">
@@ -109,6 +60,11 @@
         </div>
 
         <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-xl font-semibold">Total Visitors</h2>
+            <p id="totalVisitors" class="text-lg font-bold">Loading...</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 class="text-xl font-semibold">Battery Status</h2>
             <div class="battery-bar">
                 <div id="batteryLevelIndicator" class="battery-fill"></div>
@@ -120,37 +76,29 @@
     <script>
         // Firebase Configuration
         const firebaseConfig = {
-            apiKey: "YOUR_FIREBASE_API_KEY",
-            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
-            databaseURL: "YOUR_FIREBASE_DB_URL",
-            projectId: "YOUR_FIREBASE_PROJECT_ID",
-            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_FIREBASE_MESSAGING_ID",
-            appId: "YOUR_FIREBASE_APP_ID"
+            apiKey: "AIzaSyBFseGxdtRQgLCFDQOgf7hmRMvWZo-YUew",
+            authDomain: "fajar-official-9c2fc.firebaseapp.com",
+            databaseURL: "https://fajar-official-9c2fc-default-rtdb.firebaseio.com/",
+            projectId: "fajar-official-9c2fc",
+            storageBucket: "fajar-official-9c2fc.appspot.com",
+            messagingSenderId: "984202918822",
+            appId: "1:984202918822:web:9deb22d3afa7b165786d67",
+            measurementId: "G-DW7XT5LCRC"
         };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        function toggleSidebar() {
-            document.getElementById("sidebar").classList.toggle("active");
+        // Update Jakarta Time
+        function updateJakartaTime() {
+            let time = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
+            document.getElementById("jakartaTime").textContent = time;
         }
+        setInterval(updateJakartaTime, 1000);
+        updateJakartaTime();
 
-        function toggleSubmenu(id) {
-            const submenu = document.getElementById(id);
-            const arrow = document.getElementById(`${id}-arrow`);
-            submenu.classList.toggle("active");
-            arrow.innerHTML = submenu.classList.contains("active") ? "▼" : "▶";
-        }
-
-        function getJakartaTime() {
-            document.getElementById("jakartaTime").textContent = new Date().toLocaleTimeString("id-ID", { timeZone: "Asia/Jakarta" });
-        }
-
-        setInterval(getJakartaTime, 1000);
-        getJakartaTime();
-
+        // Fetch IP Address
         async function getIPAddress() {
             try {
                 let response = await fetch("https://api64.ipify.org?format=json");
@@ -162,19 +110,47 @@
         }
         getIPAddress();
 
+        // Fetch Battery Status
         async function getBatteryStatus() {
-            if (navigator.getBattery) {
+            if ("getBattery" in navigator) {
                 let battery = await navigator.getBattery();
                 function updateBattery() {
                     let level = Math.floor(battery.level * 100);
                     document.getElementById("batteryPercentage").textContent = level + "%";
                     document.getElementById("batteryLevelIndicator").style.width = level + "%";
+                    document.getElementById("batteryLevelIndicator").style.background = level > 20 ? "green" : "red";
                 }
                 updateBattery();
                 battery.addEventListener("levelchange", updateBattery);
+            } else {
+                document.getElementById("batteryPercentage").textContent = "Battery API tidak didukung";
             }
         }
         getBatteryStatus();
+
+        // Update Total Visitors
+        async function updateTotalVisitors() {
+            try {
+                const visitorsRef = database.ref('visitors');
+                const snapshot = await visitorsRef.once('value');
+                let totalVisitors = snapshot.val() || 0;
+
+                let sessionVisited = sessionStorage.getItem("visited");
+
+                // Jika belum pernah mengunjungi dalam sesi ini, tambahkan visitor
+                if (!sessionVisited) {
+                    totalVisitors += 1;
+                    visitorsRef.set(totalVisitors);
+                    sessionStorage.setItem("visited", "true"); // Tandai bahwa sesi ini sudah dihitung
+                }
+
+                document.getElementById("totalVisitors").textContent = totalVisitors;
+            } catch (error) {
+                document.getElementById("totalVisitors").textContent = "Gagal mengambil total pengunjung";
+            }
+        }
+        
+        updateTotalVisitors();
     </script>
 
 </body>
