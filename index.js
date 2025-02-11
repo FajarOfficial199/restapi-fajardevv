@@ -159,33 +159,6 @@ app.get("/api/downloader/spotifys", async (req, res) => {
     }
 });
 
-app.get('/api/downloader/ssweb', async (req, res) => {
-    const url = req.query.url;
-    if (!url) {
-        return res.status(400).json({
-            status: false,
-            message: "Parameter 'url' tidak boleh kosong."
-        });
-    }
-
-    try {
-        const screenshot = await fajar.ssweb(url);
-        res.json({
-            status: true,
-            creator: `${creator}`,
-            results: {
-                image: `data:image/png;base64,${Buffer.from(screenshot.result).toString('base64')}`
-            }
-        });
-    } catch (error) {
-        res.status(500).json({
-            status: false,
-            message: "Gagal mengambil screenshot.",
-            error: error.message
-        });
-    }
-});
-
 app.get('/api/downloader/mediafire', async (req, res) => {
     const url = req.query.url;
     
