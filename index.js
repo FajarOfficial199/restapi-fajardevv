@@ -167,25 +167,7 @@ app.get("/api/downloader/spotifys", async (req, res) => {
 
 app.get('/api/downloader/mediafire', async (req, res) => {
     const url = req.query.url;
-    const apikey = req.query.apikey;
-
-    // Validasi API key
-    if (!apikey) {
-        return res.status(400).json({
-            status: false,
-            message: "API key diperlukan! Gunakan parameter ?apikey=your_api_key"
-        });
-    }
-
-    const check = await getUserApiKey(apikey);
-    if (!check) {
-        return res.status(403).json({
-            status: false,
-            message: `API key ${apikey} tidak ditemukan!`
-        });
-    }
-
-    // Validasi apakah URL ada
+    
     if (!url) {
         return res.status(400).json({
             status: false,
