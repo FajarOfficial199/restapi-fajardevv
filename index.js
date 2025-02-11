@@ -211,6 +211,79 @@ app.get('/api/downloader/mediafire', async (req, res) => {
     }
 });
 
+app.get('/api/search/ip', async (req, res) => {
+    const ipnya = req.query.ipnya;
+    
+    if (!ipnya) {
+        return res.status(400).json({
+            status: false,
+            message: "Parameter 'ipnya' tidak boleh kosong."
+        });
+    }
+
+    try {
+        const response = await axios.get(`https://ipwho.is/${ipnya}`);
+        const data = response.data;
+
+        if (!data.success) {
+            return res.status(404).json({
+                status: false,
+                message: `IP ${ipnya} tidak ditemukan!`
+            });
+        }
+
+        res.json({
+            status: true,
+            creator: `${creator}`,
+            results: {
+                ip: data.ip || 'N/A',
+                success: data.success || 'N/A',
+                type: data.type || 'N/A',
+                continent: data.continent || 'N/A',
+                continent_code: data.continent_code || 'N/A',
+                country: data.country || 'N/A',
+                country_code: data.country_code || 'N/A',
+                region: data.region || 'N/A',
+                region_code: data.region_code || 'N/A',
+                city: data.city || 'N/A',
+                latitude: data.latitude || 'N/A',
+                longitude: data.longitude || 'N/A',
+                is_eu: data.is_eu ? 'Yes' : 'No',
+                postal: data.postal || 'N/A',
+                calling_code: data.calling_code || 'N/A',
+                capital: data.capital || 'N/A',
+                borders: data.borders || 'N/A',
+                flag: {
+                    image: data.flag?.img || 'N/A',
+                    emoji: data.flag?.emoji || 'N/A',
+                    emoji_unicode: data.flag?.emoji_unicode || 'N/A'
+                },
+                connection: {
+                    asn: data.connection?.asn || 'N/A',
+                    organization: data.connection?.org || 'N/A',
+                    isp: data.connection?.isp || 'N/A',
+                    domain: data.connection?.domain || 'N/A'
+                },
+                timezone: {
+                    id: data.timezone?.id || 'N/A',
+                    abbreviation: data.timezone?.abbr || 'N/A',
+                    is_dst: data.timezone?.is_dst ? 'Yes' : 'No',
+                    offset: data.timezone?.offset || 'N/A',
+                    utc: data.timezone?.utc || 'N/A',
+                    current_time: data.timezone?.current_time || 'N/A'
+                }
+            }
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            message: "Terjadi kesalahan saat mengambil data.",
+            error: error.message
+        });
+    }
+});
+
 
 app.use((req, res, next) => {
   res.status(404).send("Halaman tidak ditemukan");
