@@ -9,7 +9,6 @@ const { default: makeWaSocket, useMultiFileAuthState, fetchLatestBaileysVersion 
 const pino = require('pino');
 const cookieParser = require("cookie-parser");
 const { setTimeout: sleep } = require('timers/promises');
-const { users, addUser, getUserApiKey, checkApiKey } = require("./apikey/myapikey");
 
 //seettingsjs
 const creator = global.creator
@@ -215,41 +214,6 @@ app.get('/api/downloader/mediafire', async (req, res) => {
     }
 });
 
-app.get("/api/cekapikey", async (req, res) => {
-    const apikey = req.query.apikey;
-
-    if (!apikey) {
-        return res.json({
-            apikey: null,
-            status: "Apikey Tidak Ada",
-        });
-    }
-
-    // Cek apakah API key ada di dalam daftar
-    const isValid = checkApiKey(apikey);
-
-    res.json({
-        apikey: apikey,
-        status: isValid ? "Aktif" : "Apikey Tidak Ada",
-    });
-});
-
-app.get("/myapikey", async (req, res) => {
-    let userId = req.cookies.userId;
-
-    if (!userId) {
-        // Buat userId unik berdasarkan waktu
-        userId = "user_" + Date.now();
-        res.cookie("userId", userId, { maxAge: 1000 * 60 * 60 * 24 * 365 }); // Cookie berlaku 1 tahun
-    }
-
-    const apikey = await addUser(userId);
-
-    res.json({
-        userId,
-        apikey
-    });
-});
 
 app.use((req, res, next) => {
   res.status(404).send("Halaman tidak ditemukan");
