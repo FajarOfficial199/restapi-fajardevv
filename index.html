@@ -6,6 +6,9 @@
     <title>Dashboard API</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/YOUR_FA_KIT.js" crossorigin="anonymous"></script>
+    <!-- Tambahkan Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -128,37 +131,38 @@
         <h2 class="text-xl mt-6 mb-4">FEATURES</h2>
         <ul class="menu">
             <ul>
-    <li>
-        <button onclick="toggleSubmenu('downloader')">
-            <i class="fas fa-download"></i> Downloader & Media <span id="downloader-arrow" class="arrow">></span>
-        </button>
-        <ul class="submenu" id="downloader">
-            <li><a href="/api/downloader/tiktok?url="><i class="fas fa-video"></i>Tiktok Downloader</a></li>
-            <li><a href="/api/downloader/spotify?url="><i class="fas fa-music"></i>Spotify Downloader</a></li>
-            <li><a href="/api/downloader/ytmp3?url="><i class="fas fa-music"></i>Ytmp3 Downloader</a></li>
-            <li><a href="/api/downloader/ytmp4?url="><i class="fas fa-music"></i>Ytmp4 Downloader</a></li>
-            <li><a href="/api/downloader/mediafire?url="><i class="fas fa-music"></i>MediaFire Downloader</a></li>
+                <li>
+                    <button onclick="toggleSubmenu('downloader')">
+                        <i class="fas fa-download"></i> Downloader & Media <span id="downloader-arrow" class="arrow">></span>
+                    </button>
+                    <ul class="submenu" id="downloader">
+                        <li><a href="/api/downloader/tiktok?url="><i class="fas fa-video"></i>Tiktok Downloader</a></li>
+                        <li><a href="/api/downloader/spotify?url="><i class="fas fa-music"></i>Spotify Downloader</a></li>
+                        <li><a href="/api/downloader/ytmp3?url="><i class="fas fa-music"></i>Ytmp3 Downloader</a></li>
+                        <li><a href="/api/downloader/ytmp4?url="><i class="fas fa-music"></i>Ytmp4 Downloader</a></li>
+                        <li><a href="/api/downloader/mediafire?url="><i class="fas fa-music"></i>MediaFire Downloader</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button onclick="toggleSubmenu('search')">
+                        <i class="fas fa-search"></i> Search Browsing <span id="search-arrow" class="arrow">></span>
+                    </button>
+                    <ul class="submenu" id="search">
+                        <li><a href="/api/search/ip?ipnya="><i class="fas fa-globe"></i> Track IP</a></li>
+                        <li><a href="/api/image"><i class="fas fa-images"></i> Image Search</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button onclick="toggleSubmenu('game')">
+                        <i class="fas fa-gamepad"></i> Game <span id="game-arrow" class="arrow">></span>
+                    </button>
+                    <ul class="submenu" id="game">
+                        <li><a href="/api/chess"><i class="fas fa-chess"></i> Chess Game</a></li>
+                        <li><a href="/api/arcade"><i class="fas fa-gamepad"></i> Arcade Games</a></li>
+                    </ul>
+                </li>
+            </ul>
         </ul>
-    </li>
-    <li>
-        <button onclick="toggleSubmenu('search')">
-            <i class="fas fa-search"></i> Search Browsing <span id="search-arrow" class="arrow">></span>
-        </button>
-        <ul class="submenu" id="search">
-            <li><a href="/api/search/ip?ipnya="><i class="fas fa-globe"></i> Track IP</a></li>
-            <li><a href="/api/image"><i class="fas fa-images"></i> Image Search</a></li>
-        </ul>
-    </li>
-    <li>
-        <button onclick="toggleSubmenu('game')">
-            <i class="fas fa-gamepad"></i> Game <span id="game-arrow" class="arrow">></span>
-        </button>
-        <ul class="submenu" id="game">
-            <li><a href="/api/chess"><i class="fas fa-chess"></i> Chess Game</a></li>
-            <li><a href="/api/arcade"><i class="fas fa-gamepad"></i> Arcade Games</a></li>
-        </ul>
-    </li>
-</ul>
     </div>
 
     <!-- Main Content -->
@@ -174,12 +178,12 @@
         </div>
 
         <div class="card bg-white p-6 rounded-lg shadow-md mb-6 flex items-center">
-    <i class="fas fa-users text-2xl text-blue-600 mr-3"></i> <!-- Ikon Font Awesome -->
-    <div>
-        <h2 class="text-xl font-semibold">Total Visitors</h2>
-        <p id="totalVisitors" class="text-lg font-bold">Loading...</p>
-    </div>
-</div>
+            <i class="fas fa-users text-2xl text-blue-600 mr-3"></i> <!-- Ikon Font Awesome -->
+            <div>
+                <h2 class="text-xl font-semibold">Total Visitors</h2>
+                <p id="totalVisitors" class="text-lg font-bold">Loading...</p>
+            </div>
+        </div>
 
         <div class="card bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 class="text-xl font-semibold">Battery Status</h2>
@@ -196,6 +200,21 @@
     </footer>
 
     <script>
+        // Firebase configuration
+        const firebaseConfig = {
+  apiKey: "AIzaSyBFseGxdtRQgLCFDQOgf7hmRMvWZo-YUew",
+  authDomain: "fajar-official-9c2fc.firebaseapp.com",
+  projectId: "fajar-official-9c2fc",
+  storageBucket: "fajar-official-9c2fc.firebasestorage.app",
+  messagingSenderId: "984202918822",
+  appId: "1:984202918822:web:9deb22d3afa7b165786d67",
+  measurementId: "G-DW7XT5LCRC"
+};
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
             sidebar.classList.toggle("active");
@@ -254,21 +273,28 @@
         }
         getBatteryStatus();
 
-        function updateTotalVisitors() {
-        let totalVisitors = localStorage.getItem("totalVisitors") || 0;
-        let sessionVisited = sessionStorage.getItem("visited");
+        async function updateTotalVisitors() {
+            try {
+                const visitorsRef = database.ref('visitors');
+                const snapshot = await visitorsRef.once('value');
+                let totalVisitors = snapshot.val() || 0;
 
-        // Jika belum pernah mengunjungi dalam sesi ini, tambahkan visitor
-        if (!sessionVisited) {
-            totalVisitors = parseInt(totalVisitors) + 1;
-            localStorage.setItem("totalVisitors", totalVisitors);
-            sessionStorage.setItem("visited", "true"); // Tandai bahwa sesi ini sudah dihitung
+                let sessionVisited = sessionStorage.getItem("visited");
+
+                // Jika belum pernah mengunjungi dalam sesi ini, tambahkan visitor
+                if (!sessionVisited) {
+                    totalVisitors += 1;
+                    visitorsRef.set(totalVisitors);
+                    sessionStorage.setItem("visited", "true"); // Tandai bahwa sesi ini sudah dihitung
+                }
+
+                document.getElementById("totalVisitors").textContent = totalVisitors;
+            } catch (error) {
+                document.getElementById("totalVisitors").textContent = "Gagal mengambil total pengunjung";
+            }
         }
-
-        document.getElementById("totalVisitors").textContent = totalVisitors;
-    }
-    
-    updateTotalVisitors();
+        
+        updateTotalVisitors();
     </script>
 
 </body>
